@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Browse — KenAnime</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container navin">
+    <a class="brand" href="index.html">KEN<span>ANIME</span></a>
+
+    <div class="links">
+      <a href="../index.html">← Portfolio</a>
+      <a href="index.html">Home</a>
+      <a class="active" href="browse.html">Browse</a>
+      <a href="browse.html?watchlist=1">Watchlist</a>
+    </div>
+
+    <form class="searchbar" id="globalSearch">
+      <input id="globalQ" placeholder="Search anime...">
+      <button class="btn">Search</button>
+    </form>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="section">
+
+    <div class="section-head">
+      <div>
+        <h2 id="browseTitle">Browse Anime</h2>
+        <p id="browseSub">Search and filter anime titles.</p>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input id="q" placeholder="Search title">
+
+      <select id="type">
+        <option value="">All types</option>
+        <option value="tv">TV</option>
+        <option value="movie">Movie</option>
+        <option value="ova">OVA</option>
+        <option value="ona">ONA</option>
+        <option value="special">Special</option>
+      </select>
+
+      <select id="status">
+        <option value="">Any status</option>
+        <option value="airing">Airing</option>
+        <option value="complete">Complete</option>
+        <option value="upcoming">Upcoming</option>
+      </select>
+
+      <button class="btn" id="apply">Apply</button>
+    </div>
+
+    <div id="searchStatus" style="color:var(--muted);font-size:.78rem;margin:-10px 0 18px;"></div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="pagination">
+      <button class="btn alt" id="prev">← Previous</button>
+      <button class="btn alt" id="retry" style="display:none">Retry Search</button>
+      <button class="btn alt" id="next">Next →</button>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <div class="container">KenAnime · Browse</div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+let page=1;
+
+const params=new URLSearchParams(location.search);
+const initialQuery=params.get('q')||'';
+const watchlistMode=params.get('watchlist')==='1';
+
+qs('#q').value=initialQuery;
+qs('#globalQ').value=initialQuery;
+
+if(watchlistMode){
+  qs('#browseTitle').textContent='My Watchlist';
+  qs('#browseSub').textContent='Anime saved in this browser.';
+}
+
+function updateAddress(){
+  if(watchlistMode) return;
+
+  const p=new URLSearchParams();
+  const q=qs('#q').value.trim();
+  const type=qs('#type').value;
+  const status=qs('#status').value;
+
+  if(q)p.set('q',q);
+  if(type)p.set('type',type);
+  if(status)p.set('status',status);
+  if(page>1)p.set('page',page);
+
+  const next='browse.html'+(p.toString()?'?'+p.toString():'');
+  history.replaceState(null,'',next);
+}
+
+async function load(){
+  const grid=qs('#grid');
+  const statusText=qs('#searchStatus');
+  const retryBtn=qs('#retry');
+
+  retryBtn.style.display='none';
+  statusText.textContent='';
+
+  try{
+    if(watchlistMode){
+      const ids=getWatchlist();
+      const out=[];
+
+      grid.innerHTML='<div class="empty">Loading watchlist…</div>';
+
+      for(const id of ids.slice(0,24)){
+        try{
+          out.push((await api('/anime/'+id)).data);
+          await sleep(200);
+        }catch{}
+      }
+
+      setGrid(grid,out);
+      qs('.pagination').style.display='none';
+      return;
+    }
+
+    const q=qs('#q').value.trim();
+    const type=qs('#type').value;
+    const animeStatus=qs('#status').value;
+
+    const query=new URLSearchParams({
+      page:String(page),
+      limit:'24',
+      sfw:'true'
+    });
+
+    /*
+      IMPORTANT:
+      For text searches we do NOT force order_by=score.
+      That lets Jikan return results based on the title query,
+      so searches such as "One Piece" behave normally.
+    */
+    if(q){
+      query.set('q',q);
+      statusText.textContent=`Searching for "${q}"…`;
+    }else{
+      query.set('order_by','score');
+      query.set('sort','desc');
+      statusText.textContent='Loading popular anime…';
+    }
+
+    if(type)query.set('type',type);
+    if(animeStatus)query.set('status',animeStatus);
+
+    grid.innerHTML='<div class="empty">Loading anime…</div>';
+
+    const res=await api('/anime?'+query.toString(),{
+      retries:4,
+      useCache:true
+    });
+
+    const results=res.data||[];
+    setGrid(grid,results);
+
+    if(q){
+      statusText.textContent=results.length
+        ? `${results.length} result${results.length===1?'':'s'} shown for "${q}".`
+        : `No results found for "${q}".`;
+    }else{
+      statusText.textContent='';
+    }
+
+    qs('#prev').disabled=page<=1;
+    qs('#next').disabled=!res.pagination?.has_next_page;
+
+    updateAddress();
+
+  }catch(e){
+    grid.innerHTML=`
+      <div class="empty">
+        <strong style="display:block;color:var(--text);margin-bottom:8px;">
+          Search temporarily unavailable
+        </strong>
+        ${e.message}
+      </div>
+    `;
+
+    statusText.textContent='The anime API did not respond after several retries.';
+    retryBtn.style.display='inline-block';
+
+    qs('#prev').disabled=page<=1;
+    qs('#next').disabled=true;
+  }
+}
+
+qs('#apply').onclick=()=>{
+  page=1;
+  load();
+};
+
+qs('#retry').onclick=()=>{
+  load();
+};
+
+qs('#prev').onclick=()=>{
+  if(page>1){
+    page--;
+    load();
+    scrollTo({top:0,behavior:'smooth'});
+  }
+};
+
+qs('#next').onclick=()=>{
+  page++;
+  load();
+  scrollTo({top:0,behavior:'smooth'});
+};
+
+qs('#q').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    e.preventDefault();
+    page=1;
+    load();
+  }
+});
+
+load();
+</script>
+</body>
+</html>

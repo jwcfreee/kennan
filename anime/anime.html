@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Anime Details — KenAnime</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav"><div class="container navin"><a class="brand" href="index.html">KEN<span>ANIME</span></a><div class="links">
+      <a href="../index.html">← Portfolio</a>
+      <a href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="browse.html?watchlist=1">Watchlist</a>
+    </div><form class="searchbar" id="globalSearch"><input id="globalQ" placeholder="Search anime..."><button class="btn">Search</button></form></div></nav>
+<main class="container"><div id="details" class="empty" style="margin-top:40px">Loading…</div></main><footer><div class="container">KenAnime · Series details</div></footer>
+<script src="app.js"></script><script>
+(async()=>{
+ const id=new URLSearchParams(location.search).get('id');
+ if(!id){qs('#details').textContent='Missing anime ID.';return}
+ try{
+  const a=(await api('/anime/'+id+'/full')).data;
+  document.title=titleOf(a)+' — KenAnime';
+  const genres=(a.genres||[]).map(g=>`<span class="chip">${g.name}</span>`).join('');
+  const inList=getWatchlist().includes(Number(id));
+  qs('#details').className='details';
+  qs('#details').innerHTML=`<div><img src="${imgOf(a)}" alt="${titleOf(a)}"></div><div>
+   <div class="eyebrow">${a.type||'Anime'} · ${a.status||''}</div><h1>${titleOf(a)}</h1>
+   <div class="chips">${genres}</div>
+   <div class="statgrid"><div class="stat"><small>Score</small><strong>★ ${a.score??'—'}</strong></div><div class="stat"><small>Episodes</small><strong>${a.episodes??'?'}</strong></div><div class="stat"><small>Year</small><strong>${a.year??a.aired?.prop?.from?.year??'—'}</strong></div><div class="stat"><small>Rating</small><strong>${a.rating||'—'}</strong></div></div>
+   <p class="synopsis">${a.synopsis||'No synopsis available.'}</p>
+   <div class="hero-actions"><a class="btn" href="watch.html?id=${id}">▶ Watch Trailer</a><button class="btn alt" id="watchlistBtn">${inList?'✓ In Watchlist':'＋ Add to Watchlist'}</button></div>
+  </div>`;
+  qs('#watchlistBtn').onclick=()=>{const added=toggleWatch(Number(id));qs('#watchlistBtn').textContent=added?'✓ In Watchlist':'＋ Add to Watchlist'};
+ }catch(e){qs('#details').textContent=e.message}
+})();
+</script></body></html>

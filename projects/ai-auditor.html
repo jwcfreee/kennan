@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI Auditor — Product Data Validation</title>
+<style>
+:root{
+  --bg:#070814;--panel:#0d1020;--panel2:#111529;--border:#242944;
+  --text:#f3f5ff;--muted:#8b93b4;--violet:#8b5cf6;--blue:#3b82f6;
+  --green:#2dd4bf;--red:#fb7185;--amber:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#080915,#05060d);color:var(--text);min-height:100vh}
+.app{max-width:1450px;margin:auto;padding:28px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.brand{font-weight:800;font-size:1.15rem}.brand span{color:var(--violet)}
+.actions{display:flex;gap:10px}
+button,.file-btn{
+  border:1px solid var(--border);background:var(--panel2);color:var(--text);
+  padding:10px 15px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.8rem;
+}
+button.primary,.file-btn.primary{background:linear-gradient(135deg,var(--violet),var(--blue));border:none}
+input[type=file]{display:none}
+.hero{background:linear-gradient(135deg,rgba(139,92,246,.13),rgba(59,130,246,.05));border:1px solid var(--border);
+border-radius:18px;padding:24px;margin-bottom:18px;display:flex;justify-content:space-between;gap:24px;align-items:center}
+.hero h1{font-size:2rem;margin-bottom:7px}.hero p{color:var(--muted);line-height:1.6}
+.pill{font-size:.68rem;letter-spacing:1.5px;color:#bda9ff;text-transform:uppercase;font-weight:800;margin-bottom:8px}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.metric{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px}
+.metric .label{color:var(--muted);font-size:.72rem;margin-bottom:10px}
+.metric .value{font-size:1.8rem;font-weight:900}
+.metric .sub{font-size:.68rem;color:var(--muted);margin-top:5px}
+.green{color:var(--green)}.red{color:var(--red)}.amber{color:var(--amber)}.violet{color:#a78bfa}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
+.panel h3{font-size:.95rem;margin-bottom:14px}
+.table-wrap{overflow:auto;max-height:520px}
+table{width:100%;border-collapse:collapse;min-width:820px}
+th,td{padding:11px 10px;text-align:left;border-bottom:1px solid #191e33;font-size:.75rem}
+th{color:#aeb5d1;font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;position:sticky;top:0;background:var(--panel);z-index:2}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.64rem;font-weight:800}
+.badge.red{background:rgba(251,113,133,.12)}.badge.amber{background:rgba(251,191,36,.12)}.badge.green{background:rgba(45,212,191,.12)}
+.issue-list{display:flex;flex-direction:column;gap:10px}
+.issue-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--panel2);border-radius:10px}
+.issue-name{font-size:.75rem;color:#cbd1e8}.issue-count{font-weight:900}
+.drop{border:1px dashed #3a4169;background:#0a0d1b;border-radius:14px;padding:20px;text-align:center;color:var(--muted);margin-bottom:14px}
+.help{font-size:.72rem;line-height:1.6;color:var(--muted)}
+.empty{padding:45px 20px;text-align:center;color:var(--muted)}
+footer{text-align:center;color:#505979;font-size:.7rem;padding:22px}
+@media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:620px){.app{padding:14px}.hero{flex-direction:column;align-items:flex-start}.metrics{grid-template-columns:1fr}.topbar{align-items:flex-start;gap:12px;flex-direction:column}}
+
+
+/* =========================================================
+   MOBILE / PHONE FRIENDLY — AI AUDITOR
+========================================================= */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+button, .file-btn {
+  min-height: 42px;
+  touch-action: manipulation;
+}
+
+@media(max-width:900px){
+  .app{
+    width:100%;
+    padding:18px;
+  }
+
+  .topbar{
+    gap:14px;
+  }
+
+  .actions{
+    flex-wrap:wrap;
+  }
+
+  .hero{
+    align-items:flex-start;
+  }
+
+  .hero h1{
+    font-size:1.7rem;
+  }
+
+  .metrics{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .panel{
+    min-width:0;
+  }
+
+  .table-wrap{
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:10px;
+  }
+
+  table{
+    min-width:760px;
+  }
+}
+
+@media(max-width:620px){
+  .app{
+    padding:12px;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:stretch;
+    margin-bottom:14px;
+  }
+
+  .brand{
+    font-size:1rem;
+  }
+
+  .actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    width:100%;
+    gap:8px;
+  }
+
+  .actions button,
+  .actions .file-btn{
+    width:100%;
+    text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 8px;
+    font-size:.72rem;
+  }
+
+  .actions #exportBtn{
+    grid-column:1 / -1;
+  }
+
+  .hero{
+    flex-direction:column;
+    align-items:stretch;
+    padding:18px;
+    border-radius:14px;
+    gap:16px;
+  }
+
+  .hero h1{
+    font-size:1.55rem;
+    line-height:1.12;
+  }
+
+  .hero p{
+    font-size:.84rem;
+  }
+
+  .hero #runBtn{
+    width:100%;
+  }
+
+  .metrics{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:12px;
+  }
+
+  .metric{
+    padding:13px;
+    border-radius:11px;
+    min-width:0;
+  }
+
+  .metric .label{
+    font-size:.64rem;
+    margin-bottom:7px;
+  }
+
+  .metric .value{
+    font-size:1.45rem;
+  }
+
+  .metric .sub{
+    font-size:.61rem;
+    line-height:1.35;
+  }
+
+  .grid{
+    gap:12px;
+  }
+
+  .panel{
+    padding:14px;
+    border-radius:13px;
+  }
+
+  .panel h3{
+    font-size:.9rem;
+  }
+
+  /*
+    Mobile audit results use horizontal scrolling rather than crushing
+    six table columns into the phone width.
+  */
+  .table-wrap{
+    margin:0 -2px;
+    padding-bottom:5px;
+  }
+
+  table{
+    min-width:700px;
+  }
+
+  th,td{
+    padding:9px 8px;
+    font-size:.7rem;
+    white-space:nowrap;
+  }
+
+  th{
+    font-size:.61rem;
+  }
+
+  .issue-row{
+    gap:10px;
+    padding:10px;
+  }
+
+  .issue-name{
+    font-size:.7rem;
+  }
+
+  .drop{
+    padding:15px 10px;
+    overflow-wrap:anywhere;
+    line-height:1.55;
+  }
+
+  .help{
+    font-size:.68rem;
+  }
+
+  footer{
+    padding:18px 12px 24px;
+  }
+}
+
+@media(max-width:390px){
+  .actions{
+    grid-template-columns:1fr;
+  }
+
+  .actions #exportBtn{
+    grid-column:auto;
+  }
+
+  .metrics{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:1.4rem;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand"><span>✦</span> AI Auditor</div>
+    <div class="actions">
+      <label class="file-btn primary" for="csvFile">Upload CSV</label>
+      <input id="csvFile" type="file" accept=".csv">
+      <button id="sampleBtn">Load Sample</button>
+      <button id="exportBtn">Export Issues</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="pill">AI & Automation · E-Commerce</div>
+      <h1>Product Data Audit</h1>
+      <p>Scan product catalogs for data quality problems before they reach your storefront.</p>
+    </div>
+    <button class="primary" id="runBtn">▶ Run Audit</button>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Products Scanned</div><div class="value" id="mProducts">0</div><div class="sub">Total catalog rows</div></div>
+    <div class="metric"><div class="label">Issues Detected</div><div class="value red" id="mIssues">0</div><div class="sub">Needs review</div></div>
+    <div class="metric"><div class="label">Price Issues</div><div class="value amber" id="mPrice">0</div><div class="sub">Invalid or missing</div></div>
+    <div class="metric"><div class="label">Missing Data</div><div class="value violet" id="mMissing">0</div><div class="sub">Required fields</div></div>
+    <div class="metric"><div class="label">SEO Issues</div><div class="value green" id="mSeo">0</div><div class="sub">Title/description checks</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>Audit Results</h3>
+      <div class="table-wrap">
+        <table id="resultsTable">
+          <thead><tr><th>Product</th><th>SKU</th><th>Issue</th><th>Field</th><th>Value</th><th>Status</th></tr></thead>
+          <tbody id="resultsBody"><tr><td colspan="6"><div class="empty">Upload a CSV or load the sample catalog to begin.</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:18px">
+        <h3>Issue Breakdown</h3>
+        <div class="issue-list" id="breakdown">
+          <div class="issue-row"><span class="issue-name">Missing SKU</span><span class="issue-count">0</span></div>
+          <div class="issue-row"><span class="issue-name">Duplicate SKU</span><span class="issue-count">0</span></div>
+          <div class="issue-row"><span class="issue-name">Price Issues</span><span class="issue-count">0</span></div>
+          <div class="issue-row"><span class="issue-name">Missing Description</span><span class="issue-count">0</span></div>
+          <div class="issue-row"><span class="issue-name">Missing Image</span><span class="issue-count">0</span></div>
+          <div class="issue-row"><span class="issue-name">SEO Issues</span><span class="issue-count">0</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Expected CSV Columns</h3>
+        <div class="drop">title, sku, price, description, image, seo_title, seo_description</div>
+        <div class="help">
+          The auditor accepts common alternatives too, such as <b>product</b>, <b>name</b>, <b>image_url</b>, and <b>meta_description</b>.
+          This standalone version performs deterministic validation in your browser; no product data is uploaded anywhere.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>AI Auditor · Portfolio Demo</footer>
+
+<script>
+let rows = [];
+let issues = [];
+
+const aliases = {
+  title:['title','product','product_name','name'],
+  sku:['sku','variant_sku','product_sku'],
+  price:['price','variant_price','selling_price'],
+  description:['description','body','body_html','product_description'],
+  image:['image','image_url','featured_image','src'],
+  seo_title:['seo_title','meta_title','page_title'],
+  seo_description:['seo_description','meta_description','meta_desc']
+};
+
+function normalizeKey(k){return k.trim().toLowerCase().replace(/\s+/g,'_');}
+function getVal(row, key){
+  for(const a of aliases[key]){
+    if(row[a] !== undefined) return String(row[a] ?? '').trim();
+  }
+  return '';
+}
+function parseCSV(text){
+  const lines = text.replace(/\r/g,'').split('\n').filter(x=>x.trim());
+  if(!lines.length) return [];
+  const parseLine = line => {
+    let out=[], cur='', q=false;
+    for(let i=0;i<line.length;i++){
+      const ch=line[i];
+      if(ch === '"'){
+        if(q && line[i+1] === '"'){cur+='"';i++;}
+        else q=!q;
+      } else if(ch===',' && !q){out.push(cur);cur='';}
+      else cur+=ch;
+    }
+    out.push(cur);
+    return out;
+  };
+  const headers=parseLine(lines[0]).map(normalizeKey);
+  return lines.slice(1).map(line=>{
+    const vals=parseLine(line), obj={};
+    headers.forEach((h,i)=>obj[h]=vals[i] ?? '');
+    return obj;
+  });
+}
+function addIssue(rowIndex, type, field, value, severity='warning'){
+  const r=rows[rowIndex];
+  issues.push({
+    product:getVal(r,'title') || `Row ${rowIndex+2}`,
+    sku:getVal(r,'sku') || '—',
+    type, field, value:value || '—', severity
+  });
+}
+function audit(){
+  issues=[];
+  const skuCounts={};
+  rows.forEach(r=>{
+    const sku=getVal(r,'sku');
+    if(sku) skuCounts[sku]=(skuCounts[sku]||0)+1;
+  });
+
+  rows.forEach((r,i)=>{
+    const title=getVal(r,'title'), sku=getVal(r,'sku'), price=getVal(r,'price');
+    const desc=getVal(r,'description'), image=getVal(r,'image');
+    const seoTitle=getVal(r,'seo_title'), seoDesc=getVal(r,'seo_description');
+
+    if(!title) addIssue(i,'Missing product title','title','', 'error');
+    if(!sku) addIssue(i,'Missing SKU','sku','', 'error');
+    else if(skuCounts[sku]>1) addIssue(i,'Duplicate SKU','sku',sku,'error');
+
+    if(!price) addIssue(i,'Missing price','price','', 'error');
+    else if(isNaN(Number(price.replace(/[$£€,]/g,''))) || Number(price.replace(/[$£€,]/g,''))<=0)
+      addIssue(i,'Invalid price','price',price,'error');
+
+    if(!desc) addIssue(i,'Missing description','description','', 'warning');
+    else if(desc.length<60) addIssue(i,'Description too short','description',`${desc.length} chars`,'warning');
+
+    if(!image) addIssue(i,'Missing image','image','', 'warning');
+
+    if(!seoTitle) addIssue(i,'Missing SEO title','seo_title','', 'warning');
+    else if(seoTitle.length>60) addIssue(i,'SEO title too long','seo_title',`${seoTitle.length} chars`,'warning');
+
+    if(!seoDesc) addIssue(i,'Missing SEO description','seo_description','', 'warning');
+    else if(seoDesc.length>160) addIssue(i,'SEO description too long','seo_description',`${seoDesc.length} chars`,'warning');
+  });
+
+  render();
+}
+function render(){
+  document.getElementById('mProducts').textContent=rows.length;
+  document.getElementById('mIssues').textContent=issues.length;
+  const priceIssues=issues.filter(x=>x.field==='price').length;
+  const missing=issues.filter(x=>x.type.startsWith('Missing') && !x.type.includes('SEO')).length;
+  const seo=issues.filter(x=>x.field.startsWith('seo_')).length;
+  document.getElementById('mPrice').textContent=priceIssues;
+  document.getElementById('mMissing').textContent=missing;
+  document.getElementById('mSeo').textContent=seo;
+
+  const body=document.getElementById('resultsBody');
+  if(!issues.length){
+    body.innerHTML=`<tr><td colspan="6"><div class="empty">${rows.length?'No issues found. Your catalog looks clean.':'Upload a CSV or load the sample catalog to begin.'}</div></td></tr>`;
+  } else {
+    body.innerHTML=issues.map(x=>`
+      <tr>
+        <td>${escapeHtml(x.product)}</td>
+        <td>${escapeHtml(x.sku)}</td>
+        <td>${escapeHtml(x.type)}</td>
+        <td>${escapeHtml(x.field)}</td>
+        <td>${escapeHtml(x.value)}</td>
+        <td><span class="badge ${x.severity==='error'?'red':'amber'}">${x.severity==='error'?'Needs Fix':'Review'}</span></td>
+      </tr>`).join('');
+  }
+
+  const labels=[
+    ['Missing SKU', issues.filter(x=>x.type==='Missing SKU').length],
+    ['Duplicate SKU', issues.filter(x=>x.type==='Duplicate SKU').length],
+    ['Price Issues', priceIssues],
+    ['Missing Description', issues.filter(x=>x.type==='Missing description').length],
+    ['Missing Image', issues.filter(x=>x.type==='Missing image').length],
+    ['SEO Issues', seo]
+  ];
+  document.getElementById('breakdown').innerHTML=labels.map(([n,c])=>
+    `<div class="issue-row"><span class="issue-name">${n}</span><span class="issue-count">${c}</span></div>`).join('');
+}
+function escapeHtml(v){
+  return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+document.getElementById('csvFile').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f)return;
+  const reader=new FileReader();
+  reader.onload=()=>{rows=parseCSV(reader.result);audit();};
+  reader.readAsText(f);
+});
+document.getElementById('sampleBtn').onclick=()=>{
+  const sample=`title,sku,price,description,image,seo_title,seo_description
+Matcha Latte Mix,MLM-001,14.99,"Premium ceremonial matcha latte mix made for smooth everyday drinks.",matcha.jpg,Matcha Latte Mix | Brevea,"Premium matcha latte mix for creamy café-style drinks at home."
+Glass Tumbler,GT-002,,"Reusable glass tumbler",glass.jpg,Glass Tumbler | Brevea,
+Ceramic Mug,CM-003,24.00,"Handcrafted ceramic mug designed for coffee and matcha lovers.",,Ceramic Mug for Coffee and Matcha | Brevea,
+Bamboo Whisk,BW-004,-3,"Traditional bamboo whisk.",whisk.jpg,Bamboo Whisk | Brevea,"Authentic bamboo whisk for smooth matcha preparation."
+Gift Set,MLM-001,39.99,"Complete matcha gift set with accessories for beginners and enthusiasts.",gift.jpg,The Ultimate Matcha Gift Set for Beginners and Enthusiasts | Brevea,"Everything you need to begin your matcha ritual, including premium matcha, whisk, scoop, bowl, guide, storage tin, and accessories."`;
+  rows=parseCSV(sample);audit();
+};
+document.getElementById('runBtn').onclick=()=>audit();
+document.getElementById('exportBtn').onclick=()=>{
+  if(!issues.length){alert('No issues to export.');return;}
+  const headers=['Product','SKU','Issue','Field','Value','Status'];
+  const csv=[headers,...issues.map(x=>[x.product,x.sku,x.type,x.field,x.value,x.severity])].map(r=>
+    r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')
+  ).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='ai-auditor-issues.csv';a.click();
+  URL.revokeObjectURL(a.href);
+};
+render();
+</script>
+</body>
+</html>

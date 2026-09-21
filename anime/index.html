@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>KenAnime — Discover Anime</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav"><div class="container navin"><a class="brand" href="index.html">KEN<span>ANIME</span></a><div class="links">
+      <a href="../index.html">← Portfolio</a>
+      <a class="active" href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="browse.html?watchlist=1">Watchlist</a>
+    </div><form class="searchbar" id="globalSearch"><input id="globalQ" placeholder="Search anime..."><button class="btn">Search</button></form></div></nav>
+<header class="hero"><div class="hero-bg" id="heroBg"></div><div class="container"><div class="hero-content"><div class="eyebrow">Featured Anime</div><h1 id="heroTitle">Loading…</h1><p id="heroText">Discover popular anime, explore series information, save a watchlist, and watch official trailers.</p><div class="meta" id="heroMeta"></div><div class="hero-actions"><a class="btn" id="detailsBtn" href="#">View Details</a><a class="btn alt" id="watchBtn" href="#">▶ Watch Trailer</a></div></div></div></header>
+<main class="container"><section class="section"><div class="section-head"><div><h2>Top Anime</h2><p>Highest-ranked titles from the anime database.</p></div><a href="browse.html">Browse all →</a></div><div class="grid" id="topGrid"></div></section><section class="section"><div class="section-head"><div><h2>Currently Airing</h2><p>Series currently in broadcast.</p></div></div><div class="grid" id="airingGrid"></div></section><div class="notice">KenAnime is a portfolio/demo interface. It uses anime metadata from Jikan/MyAnimeList and only plays official trailers when available; it does not host copyrighted anime episodes.</div></main>
+<footer><div class="container">KenAnime · A portfolio project by Kennan Egloria</div></footer>
+<script src="app.js"></script>
+<script>
+(async()=>{
+  const topGrid=qs('#topGrid');
+  const airingGrid=qs('#airingGrid');
+
+  // Set safe non-loading defaults immediately
+  qs('#heroTitle').textContent='Discover Anime';
+  qs('#heroText').textContent='Explore top-rated anime, currently airing series, trailers, details, and your personal watchlist.';
+
+  topGrid.innerHTML='<div class="empty">Loading top anime…</div>';
+  airingGrid.innerHTML='<div class="empty">Loading currently airing anime…</div>';
+
+  try{
+    // Direct AniList homepage feed: bypasses the Jikan top endpoint completely.
+    const topResult=await aniListHomeFeed({
+      kind:'top',
+      page:1,
+      perPage:12
+    });
+
+    const top=topResult.data||[];
+    setGrid(topGrid,top.slice(0,6));
+
+    const featured=top.find(x=>trailerEmbed(x)) || top[0];
+
+    if(featured){
+      qs('#heroTitle').textContent=titleOf(featured);
+
+      const synopsis=featured.synopsis || 'Discover top-rated anime and explore series details.';
+      qs('#heroText').textContent=
+        synopsis.slice(0,260) + (synopsis.length>260?'…':'');
+
+      const bg=imgOf(featured);
+      if(bg){
+        qs('#heroBg').style.backgroundImage=`url("${bg}")`;
+      }
+
+      qs('#heroMeta').innerHTML=`
+        <span>★ ${featured.score??'—'}</span>
+        <span>${featured.type||'Anime'}</span>
+        <span>${featured.episodes??'?'} episodes</span>
+        <span>${featured.status||''}</span>
+      `;
+
+      qs('#detailsBtn').href=`anime.html?id=${featured.mal_id}`;
+      qs('#watchBtn').href=`watch.html?id=${featured.mal_id}`;
+    }
+  }catch(e){
+    topGrid.innerHTML=`
+      <div class="empty">
+        <strong style="display:block;color:var(--text);margin-bottom:8px;">
+          Top anime feed unavailable
+        </strong>
+        ${e.message}
+      </div>
+    `;
+  }
+
+  try{
+    const airingResult=await aniListHomeFeed({
+      kind:'airing',
+      page:1,
+      perPage:6
+    });
+
+    setGrid(airingGrid,airingResult.data||[]);
+  }catch(e){
+    airingGrid.innerHTML=`
+      <div class="empty">
+        <strong style="display:block;color:var(--text);margin-bottom:8px;">
+          Currently airing feed unavailable
+        </strong>
+        ${e.message}
+      </div>
+    `;
+  }
+})();
+</script></body></html>

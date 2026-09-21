@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CQS Growth Engine — Profile Analyzer</title>
+<style>
+:root{
+  --bg:#070814;--panel:#0d1020;--panel2:#111529;--border:#242944;
+  --text:#f4f6ff;--muted:#8d95b5;--violet:#8b5cf6;--blue:#3b82f6;
+  --green:#2dd4bf;--red:#fb7185;--amber:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#080915,#05060d);color:var(--text);min-height:100vh}
+.app{max-width:1450px;margin:auto;padding:28px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.brand{font-weight:900;font-size:1.15rem}.brand span{color:var(--violet)}
+.hero{background:linear-gradient(135deg,rgba(139,92,246,.13),rgba(59,130,246,.05));border:1px solid var(--border);border-radius:18px;padding:24px;margin-bottom:18px}
+.pill{font-size:.68rem;letter-spacing:1.5px;color:#bda9ff;text-transform:uppercase;font-weight:900;margin-bottom:8px}
+.hero h1{font-size:2rem;margin-bottom:8px}
+.hero p{color:var(--muted);line-height:1.6;max-width:800px}
+.search{display:flex;gap:10px;margin-top:20px}
+.search input{flex:1;min-width:0;background:#090c19;border:1px solid var(--border);color:var(--text);padding:13px 15px;border-radius:10px;font-size:.9rem;outline:none}
+.search input:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+button{border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer}
+button.primary{background:linear-gradient(135deg,var(--violet),var(--blue));border:none}
+button:disabled{opacity:.55;cursor:not-allowed}
+.status{margin-top:10px;font-size:.72rem;color:var(--muted);min-height:1.1em}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+.metric{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px}
+.metric .label{color:var(--muted);font-size:.72rem;margin-bottom:10px}
+.metric .value{font-size:1.55rem;font-weight:900;word-break:break-word}
+.metric .sub{font-size:.65rem;color:var(--muted);margin-top:5px}
+.green{color:var(--green)}.red{color:var(--red)}.amber{color:var(--amber)}.violet{color:#a78bfa}
+.grid{display:grid;grid-template-columns:1.35fr .85fr;gap:18px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
+.panel h3{font-size:.95rem;margin-bottom:14px}
+.score-wrap{display:flex;align-items:center;gap:18px;margin-bottom:18px}
+.score-ring{width:130px;height:130px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--violet) var(--score,0%),#171a2b 0);position:relative}
+.score-ring::after{content:"";position:absolute;width:94px;height:94px;border-radius:50%;background:var(--panel)}
+.score-ring strong{position:relative;z-index:2;font-size:1.7rem}
+.score-copy p{color:var(--muted);font-size:.74rem;line-height:1.6}
+.list,.recos{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;background:var(--panel2);border-radius:10px}
+.row span:first-child{font-size:.75rem;color:#cbd1e8}.row strong{font-size:.76rem}
+.reco{padding:11px 12px;background:var(--panel2);border-left:3px solid var(--violet);border-radius:8px;font-size:.74rem;color:#cbd1e8;line-height:1.5}
+.table-wrap{overflow:auto;max-height:500px}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:11px 10px;text-align:left;border-bottom:1px solid #191e33;font-size:.75rem}
+th{color:#aeb5d1;font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;position:sticky;top:0;background:var(--panel)}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.64rem;font-weight:900}
+.good{background:rgba(45,212,191,.12);color:var(--green)}
+.warn{background:rgba(251,191,36,.12);color:var(--amber)}
+.bad{background:rgba(251,113,133,.12);color:var(--red)}
+.note{margin-top:14px;font-size:.68rem;line-height:1.55;color:var(--muted)}
+.empty{padding:38px 20px;text-align:center;color:var(--muted)}
+@media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:640px){.app{padding:14px}.metrics{grid-template-columns:1fr 1fr}.search{flex-direction:column}.hero h1{font-size:1.55rem}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand"><span>↗</span> CQS Growth Engine</div>
+  </div>
+
+  <div class="hero">
+    <div class="pill">Community · Reddit Marketing</div>
+    <h1>Reddit Profile Analyzer</h1>
+    <p>Paste a public Reddit profile URL. The engine analyzes public profile, post, and comment activity and generates a transparent portfolio Account Quality Score.</p>
+    <div class="search">
+      <input id="profileUrl" type="url" placeholder="https://www.reddit.com/user/example/" autocomplete="off">
+      <button id="analyzeBtn" class="primary">Analyze Profile</button>
+      <button id="demoBtn">Load Demo</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Account</div><div class="value" id="mAccount">—</div><div class="sub">Public username</div></div>
+    <div class="metric"><div class="label">Account Age</div><div class="value violet" id="mAge">—</div><div class="sub">Years since creation</div></div>
+    <div class="metric"><div class="label">Post Karma</div><div class="value green" id="mPostKarma">—</div><div class="sub">Public link karma</div></div>
+    <div class="metric"><div class="label">Comment Karma</div><div class="value green" id="mCommentKarma">—</div><div class="sub">Public comment karma</div></div>
+    <div class="metric"><div class="label">Recent Activity</div><div class="value amber" id="mActivity">—</div><div class="sub">Posts + comments sampled</div></div>
+    <div class="metric"><div class="label">Quality Score</div><div class="value" id="mQuality">—</div><div class="sub">Portfolio score, not Reddit CQS</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>Recent Public Activity</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>Community</th><th>Score</th><th>Age</th><th>Title / Comment</th></tr></thead>
+          <tbody id="activityBody"><tr><td colspan="5"><div class="empty">Paste a Reddit profile URL to begin.</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:18px">
+        <h3>Account Quality</h3>
+        <div class="score-wrap">
+          <div class="score-ring" id="scoreRing" style="--score:0%"><strong id="overallScore">0</strong></div>
+          <div class="score-copy">
+            <p>Calculated from observable public signals: account age, activity balance, recent consistency, karma profile, and engagement.</p>
+          </div>
+        </div>
+        <div class="list" id="breakdown"></div>
+        <div class="note">This is an independent portfolio metric. It does not expose or claim to reproduce Reddit's internal Contributor Quality Score.</div>
+      </div>
+
+      <div class="panel">
+        <h3>Recommendations</h3>
+        <div class="recos" id="recommendations"><div class="reco">Analyze a profile to generate recommendations.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+  IMPORTANT:
+  Replace API_BASE with your deployed Cloudflare Worker URL.
+  Example: const API_BASE = 'https://cqs-api.yourname.workers.dev';
+*/
+const API_BASE = 'https://YOUR-WORKER.workers.dev';
+
+const $ = id => document.getElementById(id);
+
+function parseUsername(input){
+  const raw=(input||'').trim();
+  if(!raw) return '';
+  try{
+    const u=new URL(raw);
+    const parts=u.pathname.split('/').filter(Boolean);
+    const i=parts.findIndex(x=>x.toLowerCase()==='user'||x.toLowerCase()==='u');
+    return i>=0 && parts[i+1] ? parts[i+1] : '';
+  }catch{
+    return raw.replace(/^u\//i,'').replace(/^@/,'').replace(/\/+$/,'');
+  }
+}
+
+function esc(v){
+  return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+
+function ageText(ts){
+  const d=Date.now()-ts*1000;
+  const years=d/(365.25*24*3600*1000);
+  if(years>=1) return years.toFixed(1)+'y';
+  const days=d/(24*3600*1000);
+  return Math.max(0,Math.round(days))+'d';
+}
+
+function render(data){
+  const p=data.profile;
+  const s=data.summary;
+  $('mAccount').textContent='u/'+p.name;
+  $('mAge').textContent=s.accountAgeYears.toFixed(1)+'y';
+  $('mPostKarma').textContent=p.linkKarma.toLocaleString();
+  $('mCommentKarma').textContent=p.commentKarma.toLocaleString();
+  $('mActivity').textContent=s.sampledActivity;
+  $('mQuality').textContent=s.qualityScore;
+  $('overallScore').textContent=s.qualityScore;
+  $('scoreRing').style.setProperty('--score',s.qualityScore+'%');
+
+  $('breakdown').innerHTML=`
+    <div class="row"><span>Recent posts sampled</span><strong>${s.posts}</strong></div>
+    <div class="row"><span>Recent comments sampled</span><strong>${s.comments}</strong></div>
+    <div class="row"><span>Average post score</span><strong>${s.avgPostScore.toFixed(1)}</strong></div>
+    <div class="row"><span>Average comment score</span><strong>${s.avgCommentScore.toFixed(1)}</strong></div>
+    <div class="row"><span>Active communities</span><strong>${s.communities}</strong></div>
+    <div class="row"><span>30-day consistency</span><strong>${s.consistency30}%</strong></div>
+  `;
+
+  $('recommendations').innerHTML=data.recommendations.map(x=>`<div class="reco">${esc(x)}</div>`).join('');
+
+  const items=[...data.posts.map(x=>({...x,type:'Post'})),...data.comments.map(x=>({...x,type:'Comment'}))]
+    .sort((a,b)=>b.createdUtc-a.createdUtc).slice(0,50);
+
+  $('activityBody').innerHTML=items.length?items.map(x=>`
+    <tr>
+      <td><span class="badge ${x.type==='Post'?'good':'warn'}">${x.type}</span></td>
+      <td>r/${esc(x.subreddit)}</td>
+      <td>${Number(x.score||0).toLocaleString()}</td>
+      <td>${ageText(x.createdUtc)}</td>
+      <td>${esc((x.title||x.body||'').slice(0,110))}</td>
+    </tr>
+  `).join(''):'<tr><td colspan="5"><div class="empty">No recent public activity returned.</div></td></tr>';
+}
+
+async function analyze(){
+  const username=parseUsername($('profileUrl').value);
+  if(!username){$('status').textContent='Enter a valid Reddit profile URL or username.';return;}
+  if(API_BASE.includes('YOUR-WORKER')){
+    $('status').textContent='Deploy the included Cloudflare Worker first, then put its URL in API_BASE.';
+    return;
+  }
+  $('analyzeBtn').disabled=true;
+  $('status').textContent='Analyzing public profile data…';
+  try{
+    const res=await fetch(`${API_BASE}/analyze?username=${encodeURIComponent(username)}`);
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Analysis failed');
+    render(data);
+    $('status').textContent=`Analyzed u/${data.profile.name}.`;
+  }catch(err){
+    $('status').textContent='Error: '+err.message;
+  }finally{
+    $('analyzeBtn').disabled=false;
+  }
+}
+
+$('analyzeBtn').addEventListener('click',analyze);
+$('profileUrl').addEventListener('keydown',e=>{if(e.key==='Enter') analyze();});
+
+$('demoBtn').addEventListener('click',()=>{
+  const now=Math.floor(Date.now()/1000);
+  render({
+    profile:{name:'portfolio_demo',linkKarma:8240,commentKarma:14920},
+    summary:{accountAgeYears:6.4,sampledActivity:41,posts:14,comments:27,avgPostScore:84.6,avgCommentScore:12.8,communities:9,consistency30:88,qualityScore:87},
+    recommendations:[
+      'Strong account age and balanced contribution history.',
+      'Maintain consistent, community-relevant participation rather than increasing volume abruptly.',
+      'Continue diversifying activity across genuinely relevant communities.',
+      'Review individual post performance to identify formats that earn sustainable engagement.'
+    ],
+    posts:Array.from({length:8},(_,i)=>({subreddit:['AskReddit','pics','CasualConversation','gaming'][i%4],score:[321,188,94,72,61,43,31,22][i],createdUtc:now-(i+1)*86400,title:'Sample public post '+(i+1)})),
+    comments:Array.from({length:10},(_,i)=>({subreddit:['AskReddit','movies','gaming'][i%3],score:[88,41,24,19,13,10,8,6,4,2][i],createdUtc:now-(i+1)*56000,body:'Sample public comment activity '+(i+1)}))
+  });
+  $('status').textContent='Loaded demo data.';
+});
+</script>
+</body>
+</html>

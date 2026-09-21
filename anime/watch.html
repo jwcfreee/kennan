@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Watch Trailer — KenAnime</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav"><div class="container navin"><a class="brand" href="index.html">KEN<span>ANIME</span></a><div class="links">
+      <a href="../index.html">← Portfolio</a>
+      <a href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="browse.html?watchlist=1">Watchlist</a>
+    </div><form class="searchbar" id="globalSearch"><input id="globalQ" placeholder="Search anime..."><button class="btn">Search</button></form></div></nav>
+<main class="container"><div class="watch-layout"><div><div class="player" id="player"><div class="empty">Loading trailer…</div></div><div style="margin-top:16px"><h1 id="title" style="font-size:1.5rem"></h1><p id="meta" style="color:var(--muted);margin-top:7px"></p></div></div><aside class="side"><h3>About this player</h3><p>This portfolio project only embeds official trailers supplied by the anime metadata source. It does not host full copyrighted episodes.</p><div class="hero-actions"><a class="btn alt" id="details" href="#">Series Details</a></div></aside></div></main>
+<footer><div class="container">KenAnime · Official trailer player</div></footer><script src="app.js"></script><script>
+(async()=>{
+ const id=new URLSearchParams(location.search).get('id');
+ if(!id){qs('#player').innerHTML='<div class="empty">Missing anime ID.</div>';return}
+ try{
+   const a=(await api('/anime/'+id+'/full')).data;
+   qs('#title').textContent=titleOf(a);
+   qs('#meta').textContent=`${a.type||'Anime'} · ${a.episodes??'?'} episodes · ★ ${a.score??'—'}`;
+   qs('#details').href='anime.html?id='+id;
+   const embed=trailerEmbed(a);
+   if(embed){
+     const url=embed.includes('?')?embed+'&autoplay=0':embed+'?autoplay=0';
+     qs('#player').innerHTML=`<iframe src="${url}" title="${titleOf(a)} official trailer" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+   }else{
+     qs('#player').innerHTML='<div class="empty">No official trailer is available for this title.</div>';
+   }
+ }catch(e){qs('#player').innerHTML=`<div class="empty">${e.message}</div>`}
+})();
+</script></body></html>

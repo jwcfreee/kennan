@@ -1,0 +1,57 @@
+CQS GROWTH ENGINE — REDDIT PROFILE LINK SETUP
+
+FILES
+-----
+1. cqs-growth-engine-profile.html
+   Frontend page for your GitHub Pages website.
+
+2. cqs-worker.js
+   Cloudflare Worker backend. This keeps Reddit API credentials off your website.
+
+SETUP
+-----
+A. REDDIT API
+1. Register/obtain approved Reddit API credentials for your use case.
+2. Keep the client secret private.
+3. Reddit's current Data API terms require using the access information Reddit provides.
+
+B. CLOUDFLARE WORKER
+1. Create a new Cloudflare Worker.
+2. Paste cqs-worker.js into the Worker.
+3. Add these secrets:
+      REDDIT_CLIENT_ID
+      REDDIT_CLIENT_SECRET
+4. Add optional variable:
+      ALLOWED_ORIGIN = https://kennanegloria.xyz
+5. Deploy the Worker.
+6. Copy its URL, for example:
+      https://cqs-api.<your-subdomain>.workers.dev
+
+C. FRONTEND
+1. Open cqs-growth-engine-profile.html.
+2. Find:
+      const API_BASE = 'https://YOUR-WORKER.workers.dev';
+3. Replace it with your actual Worker URL.
+4. Rename the file to:
+      cqs-growth-engine.html
+5. Upload it to your GitHub Pages repository.
+
+WHAT THE SCORE MEANS
+--------------------
+The displayed Account Quality Score is your portfolio's own transparent score.
+It is NOT Reddit's internal Contributor Quality Score (CQS).
+
+The score uses:
+- public account age
+- public post/comment karma
+- sampled recent posts and comments
+- activity balance
+- 30-day consistency
+- sampled engagement
+- diversity of recently active communities
+
+PRIVACY / COMPLIANCE
+--------------------
+Only public Reddit profile/content data is requested.
+Do not claim partnership with Reddit.
+Use Reddit's API only in accordance with Reddit's current Developer and Data API terms.
