@@ -1617,7 +1617,7 @@ a{
 
 
 /* =========================================================
-   THEME TOGGLE & AUTOMATION CASE STUDY
+   THEME TOGGLE & AI AUTOMATION PROJECTS
 ========================================================= */
 .theme-toggle{
   display:inline-flex; align-items:center; justify-content:center; gap:9px;
@@ -1705,7 +1705,7 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
 
 </style>
 <style id="ai-walkthrough-styles">
-/* 30-SCENE 2D AUTOMATION EXPLAINER — scoped to the portfolio case study */
+/* 30-SCENE 2D AUTOMATION EXPLAINER — scoped to the project portfolio */
 .aw-film {
  --aw-ink:var(--white);--aw-muted:var(--muted);--aw-panel:var(--panel);--aw-line:var(--border2);
  --aw-wash:var(--bg2);--aw-accent:#4d7dff;--aw-success:#47cfa2;--aw-warn:#e7aa5d;
@@ -4132,7 +4132,7 @@ document.addEventListener(
     s('Watch replies and bounces','Smarter follow-up decisions.','Follow-up checks consider timing, replies, and delivery failures.','A scheduled check reviews whether another draft is appropriate.','Due? Replied? Bounced?','MONITORING'),
     s('Duplicates are blocked','Avoid repeated follow-ups.','Duplicate checks help prevent repeated follow-up drafts.','The workflow checks whether a follow-up already exists.','Duplicate found → STOP','DUPLICATE PREVENTION'),
     s('Two workflows compared','Think in minutes saved.','Consider a simple efficiency scenario.','Illustrative triage and first-draft preparation comparison across 180 inquiries per month.','8 min manual · 3 min assisted','EFFICIENCY SCENARIO'),
-    s('Time savings calculation','Small improvements compound.','Five minutes saved per inquiry adds up across a busy week.','At 180 inquiries per month, five minutes each equals fifteen hours.','5 × 180 = 900 min','THE CALCULATION'),
+    s('Time savings calculation','Small improvements compound.','Five minutes saved per inquiry can add up over a busy month.','At 180 inquiries per month, five minutes each equals fifteen hours.','5 × 180 = 900 min','THE CALCULATION'),
     s('Productivity dashboard','More time returned to the team.','At higher monthly inquiry volumes, that can mean fifteen hours of potential time returned.','Modeled monthly preparation savings, not a measured client result.','15 hours / 180 leads','POTENTIAL IMPACT'),
     s('Customers and owner reconnect','More focus on relationships.','Time your team can spend building better customer relationships.','Less repetitive preparation allows more attention to real conversations.','Human time prioritized','BUSINESS VALUE'),
     s('Automation and people together','Automate the routine.','Automate the routine. Keep people in control.','An organized workflow supports the team, rather than replacing judgment.','People + systems','THE MESSAGE'),
@@ -4323,7 +4323,7 @@ document.addEventListener(
 /* Original, softly mixed 112 BPM ambient soundtrack synthesized locally.
    Sound requires a visitor click. No hosted audio, licensing or external API. */
   const musicButton=$('#awMusic');
-  let audioCtx=null,master=null,musicEnabled=false,musicTimer=null,nextNoteAt=0,beatIndex=0;
+  let audioCtx=null,master=null,musicEnabled=true,musicTimer=null,nextNoteAt=0,beatIndex=0;
   const BPM=112, beat=60/BPM;
   const chordProgression=[[220,261.63,329.63],[174.61,220,261.63],[196,246.94,293.66],[164.81,220,261.63]];
   function initializeAudio(){
@@ -4449,7 +4449,8 @@ document.addEventListener(
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause()});
   if(reduced.addEventListener)reduced.addEventListener('change',()=>{if(reduced.matches&&playing)pause()});
   setUi();
-  // Playback begins only on user command; reduced-motion viewers can advance frame by frame.
+  updateMusicButton();
+  // Playback begins only on user command; background audio starts with explicit playback.
   root.addEventListener('aw:pause',pause);
 })();
 </script>
