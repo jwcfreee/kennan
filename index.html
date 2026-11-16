@@ -1704,6 +1704,7 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
 }
 
 </style>
+<link rel="stylesheet" href="assets/automation-walkthrough.css">
 </head>
 
 <body>
@@ -2049,6 +2050,56 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
         <h2 class="section-title" id="automation-title">Less manual work.<br>More room to grow.</h2>
       </div>
       <p class="section-intro">A human-supervised lead management prototype designed to help teams respond consistently, prioritize opportunities, and reduce repetitive administrative work.</p>
+    </div>
+
+
+    <!-- Interactive illustrated process walkthrough; client-side only -->
+    <div class="aw" id="aiWalkthrough" aria-label="Interactive six-stage AI lead automation walkthrough">
+      <div class="aw-top">
+        <div class="aw-top-left"><span class="aw-dot" aria-hidden="true"></span><span>AI Automation / Process Simulator</span></div>
+        <span class="aw-top-note">Illustrative demo · No live customer data</span>
+      </div>
+      <div class="aw-grid">
+        <div class="aw-diagram">
+          <div class="aw-heading"><span>01 / Workflow map</span><span>Choose any step</span></div>
+          <div class="aw-flow" role="group" aria-label="Workflow stages">
+            <div class="aw-step-line" aria-hidden="true"><div class="aw-step-line-fill" id="awStepLine"></div></div>
+            <button type="button" class="aw-step is-active" aria-pressed="true" aria-current="step" aria-label="Step 1: Capture lead"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">↳</span></span><span class="aw-step-label">Capture</span></button>
+            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 2: Qualify lead"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">◈</span></span><span class="aw-step-label">Qualify</span></button>
+            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 3: Draft response"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">✎</span></span><span class="aw-step-label">Draft</span></button>
+            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 4: Human approval"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">✓</span></span><span class="aw-step-label">Approve</span></button>
+            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 5: Gmail draft"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">✉</span></span><span class="aw-step-label">Gmail</span></button>
+            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 6: Follow-up monitoring"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">↻</span></span><span class="aw-step-label">Monitor</span></button>
+          </div>
+          <div class="aw-moving-data" aria-hidden="true">
+            <div class="aw-orbit"></div><div class="aw-orbit"></div>
+            <div class="aw-packet"><strong id="awPacket">NEW LEAD</strong><small id="awPacketSub">Webhook received</small></div>
+          </div>
+          <p class="aw-scene-caption" id="awCaption">A form submission becomes a structured lead record.</p>
+        </div>
+        <div class="aw-story" aria-live="polite" aria-atomic="true">
+          <div class="aw-story-top"><span>02 / Business impact</span><span class="aw-stage-num" id="awIndex">01 / 06</span></div>
+          <h3 class="aw-title" id="awTitle">Every inquiry, captured.</h3>
+          <p class="aw-description" id="awDescription">A visitor submits a project inquiry. The webhook validates the name, email, service, budget and consent before storing the lead.</p>
+          <div class="aw-proof">
+            <span class="aw-proof-label">Example outcome</span>
+            <span class="aw-proof-value" id="awProof">Example: Maria Santos · Website development · $4,500 budget</span>
+          </div>
+        </div>
+      </div>
+      <div class="aw-control-bar">
+        <div class="aw-controls" role="group" aria-label="Walkthrough controls">
+          <button class="aw-btn" id="awPrev" type="button" aria-label="Previous stage">← Prev</button>
+          <button class="aw-btn aw-btn-primary" id="awPlay" type="button" aria-label="Play walkthrough">▶ Play</button>
+          <button class="aw-btn" id="awNext" type="button" aria-label="Next stage">Next →</button>
+          <button class="aw-btn" id="awReplay" type="button" aria-label="Replay from first stage">↺</button>
+        </div>
+        <div class="aw-progress-wrap" aria-label="Walkthrough progress">
+          <div class="aw-progress" aria-hidden="true"><div class="aw-progress-fill" id="awProgress"></div></div>
+          <span class="aw-time" id="awTime">1 / 6</span>
+        </div>
+      </div>
+      <p class="aw-disclaimer">This is an interactive illustration of the architecture, not a live execution. Gmail sending remains manual and disconnected from automatic triggers.</p>
     </div>
 
     <div class="automation-layout">
@@ -3681,5 +3732,6 @@ document.addEventListener(
 );
 </script>
 
+<script src="assets/automation-walkthrough.js" defer></script>
 </body>
 </html>
