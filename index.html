@@ -2215,75 +2215,14 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
         <div class="section-label">Automation / Case Study 002</div>
         <h2 class="section-title" id="automation-title">Less manual work.<br>More room to grow.</h2>
       </div>
-      <p class="section-intro">A human-supervised lead management prototype designed to help teams respond consistently, prioritize opportunities, and reduce repetitive administrative work.</p>
+      <p class="section-intro">A human-supervised lead management system designed to organize inquiries, prioritize opportunities, and simplify repetitive administration.</p>
     </div>
 
-
-    <!-- 30-scene illustrated automation story. Runs entirely in the visitor's browser. -->
-    <div class="aw aw-film" id="aiWalkthrough" aria-label="Interactive 2D AI lead automation explainer">
-      <div class="aw-film-top">
-        <div class="aw-film-brand"><span class="aw-live-dot" aria-hidden="true"></span><span>AI LEAD GENERATION &amp; FOLLOW-UP</span></div>
-        <div class="aw-film-meta"><span>2D EXPLAINER</span><span class="aw-film-separator">/</span><span>02:30</span></div>
-      </div>
-
-      <div class="aw-film-screen">
-        <div class="aw-scene-art" id="awSceneArt" role="img" aria-label="Animated illustration of a business owner and an AI automation workflow">
-          <div class="aw-film-loading" aria-hidden="true">AI <span>↗</span> WORKFLOW</div>
-        </div>
-        <div class="aw-screen-top">
-          <span class="aw-phase" id="awPhase">01 / THE PROBLEM</span>
-          <span class="aw-scene-counter" id="awSceneCounter">SCENE 01 / 30</span>
-        </div>
-        <div class="aw-screen-bottom">
-          <span class="aw-screen-tag" id="awVisualTag">CUSTOMER INQUIRIES</span>
-          <span class="aw-screen-status" id="awStatus">INTERACTIVE WALKTHROUGH</span>
-        </div>
-      </div>
-
-      <div class="aw-storyboard">
-        <div class="aw-storyboard-copy" aria-live="polite" aria-atomic="true">
-          <div class="aw-storyboard-eyebrow" id="awCategory">ACT I — THE PROBLEM</div>
-          <h3 id="awTitle">Your business is growing.</h3>
-          <p class="aw-voiceover" id="awVoiceover">Your business is growing. But so is the workload.</p>
-          <p class="aw-subtext" id="awDescription">Customer messages multiply while the same data entry and follow-up tasks continue every day.</p>
-        </div>
-        <div class="aw-storyboard-side">
-          <div class="aw-mini-label">IN THE PIPELINE</div>
-          <div class="aw-mini-value" id="awMetric">Too many manual steps</div>
-          <div class="aw-mini-note">Narration displayed as captions. Visual-only explainer; no real data is submitted.</div>
-        </div>
-      </div>
-
-      <div class="aw-film-navigation">
-        <div class="aw-act-tabs" role="group" aria-label="Jump to an act">
-          <button class="aw-act active" type="button" data-aw-act="0" aria-pressed="true">01 Problem</button>
-          <button class="aw-act" type="button" data-aw-act="6" aria-pressed="false">02 Solution</button>
-          <button class="aw-act" type="button" data-aw-act="10" aria-pressed="false">03 Workflow</button>
-          <button class="aw-act" type="button" data-aw-act="23" aria-pressed="false">04 Impact</button>
-          <button class="aw-act" type="button" data-aw-act="28" aria-pressed="false">05 Connect</button>
-        </div>
-        <div class="aw-seek-row">
-          <span id="awElapsed" class="aw-timecode">00:00</span>
-          <input type="range" id="awSeek" class="aw-seek" min="0" max="150" step="0.1" value="0" aria-label="Seek animation timeline" />
-          <span class="aw-timecode">02:30</span>
-        </div>
-        <div class="aw-player-controls">
-          <div class="aw-control-group">
-            <button class="aw-control-btn" type="button" id="awPrev" aria-label="Previous scene">← <span>Previous</span></button>
-            <button class="aw-control-btn aw-control-primary" type="button" id="awPlay" aria-label="Play animation">▶ <span>Play Film</span></button>
-            <button class="aw-control-btn" type="button" id="awNext" aria-label="Next scene"><span>Next</span> →</button>
-            <button class="aw-control-btn" type="button" id="awReplay" aria-label="Replay from start">↺ <span>Replay</span></button>
-          </div>
-          <span class="aw-player-footnote">30 scenes · 150 seconds · Interactive 2D story</span>
-        </div>
-      </div>
-      <div class="aw-ethical-note">Business workflow illustration using fictional examples. Efficiency figures are scenario estimates, not verified customer results. Email delivery is not triggered by this animation.</div>
-    </div>
 
     <div class="automation-layout">
       <div class="automation-story">
-        <div class="project-number">PROJECT / 002 &nbsp;·&nbsp; PORTFOLIO PROTOTYPE</div>
-        <h3>AI Lead Generation<br>&amp; Follow-Up</h3>
+        <div class="project-number">PROJECT / 002 &nbsp;·&nbsp; AI-POWERED LEAD OPERATIONS</div>
+        <h3><button class="automation-project-title" type="button" id="openAutomationDetailsTitle" aria-haspopup="dialog" aria-controls="automationDetailsModal">AI Lead Generation<br>&amp; Follow-Up <span aria-hidden="true">↗</span></button></h3>
         <p class="automation-lead">Customer inquiries shouldn't get lost between an inbox, a spreadsheet, and a busy team.</p>
 
         <div class="automation-block">
@@ -2303,7 +2242,7 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
           <span class="tag">JavaScript</span><span class="tag">Webhooks</span><span class="tag">Docker</span>
           <span class="tag">Data Tables</span><span class="tag">Human Approval</span>
         </div>
-        <a class="btn btn-light" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss an Automation Project ↗</a>
+        <div class="automation-actions"><button type="button" class="btn btn-light" id="openAutomationDetails" aria-haspopup="dialog" aria-controls="automationDetailsModal">Explore Project Details ↗</button><a class="btn" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss a Project ↗</a></div>
       </div>
 
       <div class="automation-visual">
@@ -2328,6 +2267,41 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
           </div>
           <p>Assumes manual triage and draft preparation take 8 minutes per inquiry and AI-assisted review takes 3 minutes: 5 minutes saved × 50 inquiries = 250 minutes. <em>Estimate only; not a measured client result.</em></p>
         </div>
+
+        <button type="button" class="automation-preview" id="openAnimationModal" aria-haspopup="dialog" aria-controls="animationModal">
+          <span class="automation-preview-heading"><span>INTERACTIVE 2D WALKTHROUGH</span><span>02:30 / 30 SCENES</span></span>
+          <svg class="automation-preview-image" viewBox="0 0 560 220" role="img" aria-label="Three AI assistant characters coordinating incoming leads along a workflow">
+            <defs><pattern id="apGrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="currentColor" stroke-opacity=".09"/></pattern></defs>
+            <rect width="560" height="220" rx="7" class="automation-preview-bg"/>
+            <rect width="560" height="220" fill="url(#apGrid)"/>
+            <path d="M110 105H450" class="automation-preview-line"/>
+            <g transform="translate(103 105)">
+              <rect x="-38" y="-33" width="76" height="72" rx="18" class="automation-bot-blue"/>
+              <rect x="-27" y="-21" width="54" height="39" rx="12" class="automation-bot-face"/>
+              <circle cx="-12" cy="-5" r="4" fill="#e8faff"/><circle cx="12" cy="-5" r="4" fill="#e8faff"/>
+              <path d="M-8 8Q0 16 8 8M0-33V-46M-38 2L-53 16M38 2L53 16M-15 39L-18 49M15 39L18 49" fill="none" stroke="#bad6ff" stroke-width="5" stroke-linecap="round"/><circle cx="0" cy="-49" r="5" fill="#bad6ff"/>
+            </g>
+            <g transform="translate(280 105)">
+              <rect x="-38" y="-33" width="76" height="72" rx="18" class="automation-bot-mint"/>
+              <rect x="-27" y="-21" width="54" height="39" rx="12" class="automation-bot-face"/>
+              <circle cx="-12" cy="-5" r="4" fill="#e8faff"/><circle cx="12" cy="-5" r="4" fill="#e8faff"/>
+              <path d="M-8 8Q0 16 8 8M0-33V-46M-38 2L-53 16M38 2L53 16M-15 39L-18 49M15 39L18 49" fill="none" stroke="#bad6ff" stroke-width="5" stroke-linecap="round"/><circle cx="0" cy="-49" r="5" fill="#bad6ff"/>
+            </g>
+            <g transform="translate(457 105)">
+              <rect x="-38" y="-33" width="76" height="72" rx="18" class="automation-bot-white"/>
+              <rect x="-27" y="-21" width="54" height="39" rx="12" class="automation-bot-face"/>
+              <circle cx="-12" cy="-5" r="4" fill="#e8faff"/><circle cx="12" cy="-5" r="4" fill="#e8faff"/>
+              <path d="M-8 8Q0 16 8 8M0-33V-46M-38 2L-53 16M38 2L53 16M-15 39L-18 49M15 39L18 49" fill="none" stroke="#bad6ff" stroke-width="5" stroke-linecap="round"/><circle cx="0" cy="-49" r="5" fill="#bad6ff"/>
+            </g>
+            <text x="103" y="179" class="automation-preview-svg-label" text-anchor="middle">CAPTURE</text>
+            <text x="280" y="179" class="automation-preview-svg-label" text-anchor="middle">ANALYZE</text>
+            <text x="457" y="179" class="automation-preview-svg-label" text-anchor="middle">COORDINATE</text>
+          </svg>
+          <span class="automation-preview-bottom">
+            <span class="automation-preview-caption"><strong>See the automation in motion</strong><span>From first inquiry to human-reviewed follow-up.</span></span>
+            <span class="automation-preview-play" aria-hidden="true">▶</span>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -2978,6 +2952,98 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
 </section>
 
 </main>
+
+<!-- AI AUTOMATION PROJECT DETAIL & PRESENTATION MODALS -->
+<div class="automation-modal" id="animationModal" role="dialog" aria-modal="true" aria-labelledby="animationModalTitle" aria-hidden="true" hidden>
+  <div class="automation-modal-panel automation-modal-film">
+    <div class="automation-modal-head"><div><div class="section-label">Interactive Process Presentation</div><h2 id="animationModalTitle">AI Lead Generation &amp; Follow-Up</h2></div>
+      <button type="button" class="automation-modal-close" aria-label="Close animation presentation" data-close-automation-modal>×</button>
+    </div>
+    <!-- 30-scene illustrated automation story. Runs entirely in the visitor's browser. -->
+    <div class="aw aw-film" id="aiWalkthrough" aria-label="Interactive 2D AI lead automation explainer">
+      <div class="aw-film-top">
+        <div class="aw-film-brand"><span class="aw-live-dot" aria-hidden="true"></span><span>AI LEAD GENERATION &amp; FOLLOW-UP</span></div>
+        <div class="aw-film-meta"><span>2D EXPLAINER</span><span class="aw-film-separator">/</span><span>02:30</span></div>
+      </div>
+
+      <div class="aw-film-screen">
+        <div class="aw-scene-art" id="awSceneArt" role="img" aria-label="Animated illustration of a business owner and an AI automation workflow">
+          <div class="aw-film-loading" aria-hidden="true">AI <span>↗</span> WORKFLOW</div>
+        </div>
+        <div class="aw-screen-top">
+          <span class="aw-phase" id="awPhase">01 / THE PROBLEM</span>
+          <span class="aw-scene-counter" id="awSceneCounter">SCENE 01 / 30</span>
+        </div>
+        <div class="aw-screen-bottom">
+          <span class="aw-screen-tag" id="awVisualTag">CUSTOMER INQUIRIES</span>
+          <span class="aw-screen-status" id="awStatus">INTERACTIVE WALKTHROUGH</span>
+        </div>
+      </div>
+
+      <div class="aw-storyboard">
+        <div class="aw-storyboard-copy" aria-live="polite" aria-atomic="true">
+          <div class="aw-storyboard-eyebrow" id="awCategory">ACT I — THE PROBLEM</div>
+          <h3 id="awTitle">Your business is growing.</h3>
+          <p class="aw-voiceover" id="awVoiceover">Your business is growing. But so is the workload.</p>
+          <p class="aw-subtext" id="awDescription">Customer messages multiply while the same data entry and follow-up tasks continue every day.</p>
+        </div>
+        <div class="aw-storyboard-side">
+          <div class="aw-mini-label">IN THE PIPELINE</div>
+          <div class="aw-mini-value" id="awMetric">Too many manual steps</div>
+          <div class="aw-mini-note">Narration displayed as captions. Visual-only explainer; no real data is submitted.</div>
+        </div>
+      </div>
+
+      <div class="aw-film-navigation">
+        <div class="aw-act-tabs" role="group" aria-label="Jump to an act">
+          <button class="aw-act active" type="button" data-aw-act="0" aria-pressed="true">01 Problem</button>
+          <button class="aw-act" type="button" data-aw-act="6" aria-pressed="false">02 Solution</button>
+          <button class="aw-act" type="button" data-aw-act="10" aria-pressed="false">03 Workflow</button>
+          <button class="aw-act" type="button" data-aw-act="23" aria-pressed="false">04 Impact</button>
+          <button class="aw-act" type="button" data-aw-act="28" aria-pressed="false">05 Connect</button>
+        </div>
+        <div class="aw-seek-row">
+          <span id="awElapsed" class="aw-timecode">00:00</span>
+          <input type="range" id="awSeek" class="aw-seek" min="0" max="150" step="0.1" value="0" aria-label="Seek animation timeline" />
+          <span class="aw-timecode">02:30</span>
+        </div>
+        <div class="aw-player-controls">
+          <div class="aw-control-group">
+            <button class="aw-control-btn" type="button" id="awPrev" aria-label="Previous scene">← <span>Previous</span></button>
+            <button class="aw-control-btn aw-control-primary" type="button" id="awPlay" aria-label="Play animation">▶ <span>Play Film</span></button>
+            <button class="aw-control-btn" type="button" id="awNext" aria-label="Next scene"><span>Next</span> →</button>
+            <button class="aw-control-btn" type="button" id="awReplay" aria-label="Replay from start">↺ <span>Replay</span></button>
+          </div>
+          <span class="aw-player-footnote">30 scenes · 150 seconds · Interactive 2D story</span>
+        </div>
+      </div>
+      <div class="aw-ethical-note">Business workflow illustration using fictional examples. Efficiency figures are scenario estimates, not verified customer results. Email delivery is not triggered by this animation.</div>
+    </div>
+
+
+  </div>
+</div>
+
+<div class="automation-modal" id="automationDetailsModal" role="dialog" aria-modal="true" aria-labelledby="automationDetailsTitle" aria-hidden="true" hidden>
+  <div class="automation-modal-panel automation-modal-details">
+    <div class="automation-modal-head"><div><div class="section-label">Project / 002 · AI Automation</div><h2 id="automationDetailsTitle">AI Lead Generation &amp; Follow-Up</h2></div>
+      <button type="button" class="automation-modal-close" aria-label="Close project details" data-close-automation-modal>×</button>
+    </div>
+    <div class="automation-details-content">
+      <p class="automation-detail-lead">Capture customer inquiries, prioritize opportunities, and support timely communication—with a person making important decisions.</p>
+      <div class="automation-detail-grid">
+        <section><span class="automation-eyebrow">01 / The business challenge</span><h3>Leads shouldn't get lost in busy work.</h3><p>Manual data entry, disconnected inboxes, slow response preparation, and inconsistent follow-up tracking create unnecessary administrative work for agencies, small businesses, and e-commerce teams.</p></section>
+        <section><span class="automation-eyebrow">02 / How the system works</span><h3>Connected from inquiry to review.</h3><p>Incoming webhook submissions are validated and stored. Google Gemini assists with priority classification and personalized email drafting. Human reviewers approve or request revisions. Gmail drafts and scheduled follow-up checks support controlled communication.</p></section>
+        <section><span class="automation-eyebrow">03 / Built-in safeguards</span><h3>Automation with checkpoints.</h3><p>Input validation, draft review, reply inspection, bounce detection, and duplicate checks provide control over the process. Sending is intentionally kept under manual control in the current implementation.</p></section>
+        <section><span class="automation-eyebrow">04 / Potential efficiency</span><h3>Time back for client relationships.</h3><p>An illustrative calculation assumes preparation time drops from eight minutes to three minutes per inquiry. At 50 inquiries, that represents approximately 4.2 hours of potential time saved—not a measured client result.</p></section>
+      </div>
+      <div class="tags"><span class="tag">n8n</span><span class="tag">Google Gemini</span><span class="tag">Gmail API</span><span class="tag">Webhooks</span><span class="tag">Docker</span><span class="tag">JavaScript</span><span class="tag">Human Approval</span></div>
+      <div class="automation-modal-cta"><button class="btn btn-light" id="detailsWatchAnimation" type="button">Watch the 2D Walkthrough ▶</button><a class="btn" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss Your Workflow ↗</a></div>
+    </div>
+  </div>
+</div>
+
+
 
 <!-- =====================================================
      CONTACT MODAL
