@@ -3119,7 +3119,7 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
             <button class="aw-control-btn" type="button" id="awPrev" aria-label="Previous scene">← <span>Previous</span></button>
             <button class="aw-control-btn aw-control-primary" type="button" id="awPlay" aria-label="Play animation">▶ <span>Play Film</span></button>
             <button class="aw-control-btn" type="button" id="awNext" aria-label="Next scene"><span>Next</span> →</button>
-            <button class="aw-control-btn" type="button" id="awReplay" aria-label="Replay from start">↺ <span>Replay</span></button>
+            <button class="aw-control-btn" type="button" id="awReplay" aria-label="Replay from start">↺ <span>Replay</span></button><button class="aw-control-btn aw-music-toggle" type="button" id="awMusic" aria-label="Enable background music" aria-pressed="false">♫ <span>Music Off</span></button>
           </div>
           <span class="aw-player-footnote">30 scenes · 150 seconds · Interactive 2D story</span>
         </div>
@@ -4131,9 +4131,9 @@ document.addEventListener(
     s('Controlled Gmail draft','Prepared for delivery.','Approved content can move into a controlled Gmail drafting process.','Draft creation and manual sending are separate stages.','Gmail draft + verification','CONTROLLED SENDING'),
     s('Watch replies and bounces','Smarter follow-up decisions.','Follow-up checks consider timing, replies, and delivery failures.','A scheduled check reviews whether another draft is appropriate.','Due? Replied? Bounced?','MONITORING'),
     s('Duplicates are blocked','Avoid repeated follow-ups.','Duplicate checks help prevent repeated follow-up drafts.','The workflow checks whether a follow-up already exists.','Duplicate found → STOP','DUPLICATE PREVENTION'),
-    s('Two workflows compared','Think in minutes saved.','Consider a simple efficiency scenario.','Illustrative triage and first-draft preparation comparison.','8 min manual · 3 min assisted','EFFICIENCY SCENARIO'),
-    s('Time savings calculation','Small improvements compound.','Five minutes saved per inquiry adds up across a busy week.','At 50 inquiries, five minutes of savings each equals 250 minutes.','5 × 50 = 250 min','THE CALCULATION'),
-    s('Productivity dashboard','More time returned to the team.','That’s roughly four hours of potential time reclaimed.','Projected reduction in preparation work—not a measured client result.','~4.2 hours / 50 leads','POTENTIAL IMPACT'),
+    s('Two workflows compared','Think in minutes saved.','Consider a simple efficiency scenario.','Illustrative triage and first-draft preparation comparison across 180 inquiries per month.','8 min manual · 3 min assisted','EFFICIENCY SCENARIO'),
+    s('Time savings calculation','Small improvements compound.','Five minutes saved per inquiry adds up across a busy week.','At 180 inquiries per month, five minutes each equals fifteen hours.','5 × 180 = 900 min','THE CALCULATION'),
+    s('Productivity dashboard','More time returned to the team.','At higher monthly inquiry volumes, that can mean fifteen hours of potential time returned.','Modeled monthly preparation savings, not a measured client result.','15 hours / 180 leads','POTENTIAL IMPACT'),
     s('Customers and owner reconnect','More focus on relationships.','Time your team can spend building better customer relationships.','Less repetitive preparation allows more attention to real conversations.','Human time prioritized','BUSINESS VALUE'),
     s('Automation and people together','Automate the routine.','Automate the routine. Keep people in control.','An organized workflow supports the team, rather than replacing judgment.','People + systems','THE MESSAGE'),
     s('The invitation','Let’s build a smarter process.','Let’s build a more efficient workflow for your business.','Explore an AI-supported lead management process for your own business.','kennanegloria.xyz','LET’S CONNECT')
@@ -4294,12 +4294,12 @@ document.addEventListener(
         txt(233,240,'8 min','aw-big-number','middle')+txt(659,240,'3 min','aw-big-number','middle')+
         rect(112,292,250,30,'aw-warning')+rect(541,292,95,30,'aw-success-card')+
         txt(450,92,'ILLUSTRATIVE SCENARIO','aw-svg-head','middle');break;
-      case 25: h=txt(450,121,'5 MIN × 50 INQUIRIES','aw-svg-head','middle')+
-        txt(449,272,'250','aw-huge-number','middle')+txt(449,331,'MINUTES OF POTENTIAL SAVINGS','aw-svg-label','middle')+
+      case 25: h=txt(450,121,'5 MIN × 180 INQUIRIES','aw-svg-head','middle')+
+        txt(449,272,'900','aw-huge-number','middle')+txt(449,331,'POTENTIAL MINUTES SAVED / MONTH','aw-svg-label','middle')+
         bot(150,311,.83,'blue')+bot(744,311,.83,'mint');break;
       case 26: h=card(110,64,676,347,'EFFICIENCY MODEL','')+
-        txt(168,193,'~4.2 HOURS','aw-impact-number')+
-        txt(170,232,'potential time reclaimed / 50 inquiries','aw-svg-label')+
+        txt(168,193,'15 HOURS','aw-impact-number')+
+        txt(170,232,'potential preparation time per month','aw-svg-label')+
         bars(460,340,[74,128,174,221])+
         txt(171,343,'NOT A MEASURED RESULT','aw-svg-small');break;
       case 27: h=human(242,265,.98,'happy')+
@@ -4319,6 +4319,70 @@ document.addEventListener(
     }
     return screen(h,scene);
   }
+
+/* Original, softly mixed 112 BPM ambient soundtrack synthesized locally.
+   Sound requires a visitor click. No hosted audio, licensing or external API. */
+  const musicButton=$('#awMusic');
+  let audioCtx=null,master=null,musicEnabled=false,musicTimer=null,nextNoteAt=0,beatIndex=0;
+  const BPM=112, beat=60/BPM;
+  const chordProgression=[[220,261.63,329.63],[174.61,220,261.63],[196,246.94,293.66],[164.81,220,261.63]];
+  function initializeAudio(){
+    if(audioCtx)return true;
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C)return false;
+    audioCtx=new C();
+    master=audioCtx.createGain();master.gain.value=0.055;
+    master.connect(audioCtx.destination);
+    return true;
+  }
+  function tone(freq,when,length,level=0.14,type='sine'){
+    if(!audioCtx||!master)return;
+    const osc=audioCtx.createOscillator(),env=audioCtx.createGain(),low=audioCtx.createBiquadFilter();
+    low.type='lowpass';low.frequency.value=1150;
+    osc.type=type;osc.frequency.setValueAtTime(freq,when);
+    env.gain.setValueAtTime(0.0001,when);
+    env.gain.exponentialRampToValueAtTime(level,when+0.025);
+    env.gain.exponentialRampToValueAtTime(0.0001,when+length);
+    osc.connect(low);low.connect(env);env.connect(master);
+    osc.start(when);osc.stop(when+length+0.03);
+  }
+  function scheduleMusic(){
+    if(!musicEnabled||!playing||!audioCtx)return;
+    while(nextNoteAt<audioCtx.currentTime+0.16){
+      const chord=chordProgression[Math.floor(beatIndex/8)%4],idx=beatIndex%8;
+      if(idx===0)tone(chord[0]/2,nextNoteAt,beat*3.3,0.13,'sine');
+      const melody=[0,1,2,1,2,1,0,1][idx];
+      tone(chord[melody]*2,nextNoteAt,beat*.76,0.042,'triangle');
+      if(idx%2===0)tone(chord[0],nextNoteAt,beat*.24,0.02,'sine');
+      beatIndex++;nextNoteAt+=beat;
+    }
+  }
+  async function resumeAudio(){
+    if(!musicEnabled||!playing)return;
+    if(!initializeAudio())return;
+    try{await audioCtx.resume()}catch(e){return}
+    nextNoteAt=audioCtx.currentTime+.035;
+    if(musicTimer)clearInterval(musicTimer);
+    scheduleMusic();musicTimer=setInterval(scheduleMusic,85);
+  }
+  function stopAudio(){
+    if(musicTimer){clearInterval(musicTimer);musicTimer=null}
+    if(master&&audioCtx)master.gain.setTargetAtTime(0,audioCtx.currentTime,.06);
+    if(audioCtx){setTimeout(()=>{if(!playing&&audioCtx?.state==='running')audioCtx.suspend().catch(()=>{})},250)}
+  }
+  function updateMusicButton(){
+    if(!musicButton)return;
+    musicButton.setAttribute('aria-pressed',String(musicEnabled));
+    musicButton.setAttribute('aria-label',musicEnabled?'Mute background music':'Enable background music');
+    musicButton.innerHTML=musicEnabled?'♫ <span>Music On</span>':'♫ <span>Music Off</span>';
+  }
+  musicButton?.addEventListener('click',()=>{
+    musicEnabled=!musicEnabled;
+    updateMusicButton();
+    if(musicEnabled){if(master&&audioCtx)master.gain.setTargetAtTime(.055,audioCtx.currentTime,.07);resumeAudio()}
+    else stopAudio();
+  });
+
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   let current=0,progress=0,playing=false,frame=0,last=0;
   const totalSeconds=()=>current*DURATION+progress;
@@ -4350,21 +4414,21 @@ document.addEventListener(
     seek.style.setProperty('--seek-progress',((totalSeconds()/TOTAL)*100)+'%');
     time.textContent=clock(totalSeconds());
   }
-  function pause(){playing=false;last=0;if(frame)cancelAnimationFrame(frame);frame=0;setUi()}
+  function pause(){playing=false;last=0;if(frame)cancelAnimationFrame(frame);frame=0;stopAudio();setUi()}
   function tick(now){
     if(!playing)return;
     if(last)progress+=Math.min(0.08,(now-last)/1000);
     last=now;
     if(progress>=DURATION){
       progress-=DURATION;
-      if(current===scenes.length-1){playing=false;progress=DURATION;setUi();return}
+      if(current===scenes.length-1){playing=false;progress=DURATION;stopAudio();setUi();return}
       current++;setUi();
     }
     refreshTime();
     frame=requestAnimationFrame(tick);
   }
   function start(){if(playing)return; if(totalSeconds()>=TOTAL){current=0;progress=0}
-    playing=true;last=0;setUi();frame=requestAnimationFrame(tick)}
+    playing=true;last=0;setUi();if(master&&audioCtx)master.gain.setTargetAtTime(.055,audioCtx.currentTime,.07);resumeAudio();frame=requestAnimationFrame(tick)}
   function seekTo(seconds){
     const bounded=Math.min(TOTAL,Math.max(0,Number(seconds)||0));
     current=Math.min(scenes.length-1,Math.floor(bounded/DURATION));
@@ -4396,8 +4460,9 @@ document.addEventListener(
   'use strict';
   const animation=document.getElementById('animationModal');
   const details=document.getElementById('automationDetailsModal');
+  const architecture=document.getElementById('workflowModal');
   const film=document.getElementById('aiWalkthrough');
-  if(!animation||!details||!film)return;
+  if(!animation||!details||!architecture||!film)return;
   let current=null,previousFocus=null;
   const focusable='button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])';
   function openModal(modal){
@@ -4422,11 +4487,12 @@ document.addEventListener(
     previousFocus=null;
   }
   document.getElementById('openAnimationModal')?.addEventListener('click',()=>openModal(animation));
+  document.getElementById('openWorkflowModal')?.addEventListener('click',()=>openModal(architecture));
   document.getElementById('openAutomationDetails')?.addEventListener('click',()=>openModal(details));
   document.getElementById('openAutomationDetailsTitle')?.addEventListener('click',()=>openModal(details));
   document.getElementById('detailsWatchAnimation')?.addEventListener('click',()=>openModal(animation));
   document.querySelectorAll('[data-close-automation-modal]').forEach(b=>b.addEventListener('click',()=>closeModal()));
-  [animation,details].forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal)closeModal()}));
+  [animation,details,architecture].forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal)closeModal()}));
   document.addEventListener('keydown',e=>{
     if(!current)return;
     if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeModal();return}
