@@ -1976,6 +1976,70 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
 .automation-architecture-figure img{display:block;width:100%;min-width:800px;background:#f7f7f7}
 .automation-architecture-figure p{font:12px/1.7 var(--mono);color:var(--muted)}
 @media(max-width:720px){.automation-benefits{grid-template-columns:1fr}.automation-story-cards{grid-template-columns:1fr}.automation-story-cards>div{min-height:unset}.automation-details-minimal{padding:22px}.automation-summary-stat strong{font-size:55px}}
+<style id="automation-hover-controls">
+
+/* Position film transport directly over the lower part of the presentation.
+   Reveal on hover/focus; touch devices always have visible controls. */
+.automation-modal-film .aw-film-screen{position:relative}
+.automation-modal-film .aw-film-navigation{
+  position:absolute;z-index:15;left:0;right:0;bottom:0;
+  padding:35px 22px 14px;margin:0;
+  background:linear-gradient(to top,rgba(4,9,19,.99) 0%,rgba(4,9,19,.96) 72%,rgba(4,9,19,0) 100%);
+  color:#f1f5ff;
+  opacity:0;transform:translateY(12px);
+  visibility:hidden;pointer-events:none;
+  transition:opacity .22s ease,transform .22s ease,visibility .22s ease;
+}
+.automation-modal-film .aw-film-screen:hover .aw-film-navigation,
+.automation-modal-film .aw-film-screen:focus-within .aw-film-navigation{
+  opacity:1;transform:translateY(0);visibility:visible;pointer-events:auto;
+}
+.automation-modal-film .aw-act-tabs{gap:5px;margin-bottom:12px}
+.automation-modal-film .aw-act{font-size:9px;min-height:30px;padding:5px 3px;color:#c0cce3;border-color:#566278;background:rgba(11,19,35,.9)}
+.automation-modal-film .aw-act.active{background:#f4f6fa;color:#131925;border-color:#f4f6fa}
+.automation-modal-film .aw-seek-row{margin-bottom:12px;gap:10px}
+.automation-modal-film .aw-timecode,.automation-modal-film .aw-player-footnote{color:#b3c3d9}
+.automation-modal-film .aw-player-footnote{font-size:9px}
+.automation-modal-film .aw-control-btn{min-height:32px;padding:7px 11px;border-color:#586780;color:#f2f5fc;background:rgba(13,21,38,.9)}
+.automation-modal-film .aw-control-primary{background:#f0f3f7;color:#131925;border-color:#f0f3f7}
+.automation-modal-film .aw-control-primary:hover{color:#131925;background:#d5e0f6}
+.automation-modal-film .aw-control-group{gap:6px}
+.automation-modal-film .aw-screen-bottom{bottom:0;padding-bottom:22px;transition:opacity .18s}
+.automation-modal-film .aw-film-screen:hover .aw-screen-bottom,
+.automation-modal-film .aw-film-screen:focus-within .aw-screen-bottom{opacity:0}
+.aw-controls-hint{
+  position:absolute;left:50%;bottom:12px;z-index:8;
+  transform:translateX(-50%);pointer-events:none;
+  font:500 10px var(--mono);letter-spacing:.8px;color:#c9d7ef;
+  background:rgba(9,18,35,.82);padding:8px 12px;border:1px solid rgba(151,178,220,.24);
+  white-space:nowrap;opacity:.92;transition:opacity .18s;
+}
+.aw-controls-hint span{margin-left:7px}
+.automation-modal-film .aw-film-screen:hover .aw-controls-hint,
+.automation-modal-film .aw-film-screen:focus-within .aw-controls-hint{opacity:0}
+@media(hover:none),(pointer:coarse){
+ .automation-modal-film .aw-film-navigation{opacity:1;visibility:visible;transform:none;pointer-events:auto;padding:25px 10px 10px}
+ .aw-controls-hint{display:none}
+ .automation-modal-film .aw-screen-bottom{opacity:0}
+}
+@media(max-width:600px){
+ .automation-modal-film .aw-film-screen{min-height:350px}
+ .automation-modal-film .aw-act-tabs{display:flex;overflow-x:auto;gap:5px;padding-bottom:3px;scrollbar-width:thin}
+ .automation-modal-film .aw-act{flex:1 0 auto;padding:6px 7px;font-size:8px}
+ .automation-modal-film .aw-player-controls{display:block}
+ .automation-modal-film .aw-player-footnote{display:none}
+ .automation-modal-film .aw-control-group{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+ .automation-modal-film .aw-control-btn{font-size:10px;min-width:0;min-height:34px;padding:5px 3px}
+ .automation-modal-film .aw-control-btn span{display:none}
+ .automation-modal-film .aw-control-primary span{display:none}
+ .automation-modal-film .aw-control-primary{min-width:0}
+ .automation-modal-film .aw-film-navigation{padding:18px 8px 9px}
+ .aw-controls-hint{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .automation-modal-film .aw-film-navigation,.aw-controls-hint,.automation-modal-film .aw-screen-bottom{transition:none}
+}
+
 </style>
 </head>
 
@@ -3085,22 +3149,7 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
           <span class="aw-screen-tag" id="awVisualTag">CUSTOMER INQUIRIES</span>
           <span class="aw-screen-status" id="awStatus">INTERACTIVE WALKTHROUGH</span>
         </div>
-      </div>
-
-      <div class="aw-storyboard">
-        <div class="aw-storyboard-copy" aria-live="polite" aria-atomic="true">
-          <div class="aw-storyboard-eyebrow" id="awCategory">ACT I — THE PROBLEM</div>
-          <h3 id="awTitle">Your business is growing.</h3>
-          <p class="aw-voiceover" id="awVoiceover">Your business is growing. But so is the workload.</p>
-          <p class="aw-subtext" id="awDescription">Customer messages multiply while the same data entry and follow-up tasks continue every day.</p>
-        </div>
-        <div class="aw-storyboard-side">
-          <div class="aw-mini-label">IN THE PIPELINE</div>
-          <div class="aw-mini-value" id="awMetric">Too many manual steps</div>
-          <div class="aw-mini-note">Watch the process from inquiry to follow-up.</div>
-        </div>
-      </div>
-
+        <div class="aw-controls-hint" aria-hidden="true">Hover to show playback controls <span>↑</span></div>
       <div class="aw-film-navigation">
         <div class="aw-act-tabs" role="group" aria-label="Jump to an act">
           <button class="aw-act active" type="button" data-aw-act="0" aria-pressed="true">01 Problem</button>
@@ -3124,6 +3173,22 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
           <span class="aw-player-footnote">30 scenes · 150 seconds · Interactive 2D story</span>
         </div>
       </div>
+      </div>
+
+      <div class="aw-storyboard">
+        <div class="aw-storyboard-copy" aria-live="polite" aria-atomic="true">
+          <div class="aw-storyboard-eyebrow" id="awCategory">ACT I — THE PROBLEM</div>
+          <h3 id="awTitle">Your business is growing.</h3>
+          <p class="aw-voiceover" id="awVoiceover">Your business is growing. But so is the workload.</p>
+          <p class="aw-subtext" id="awDescription">Customer messages multiply while the same data entry and follow-up tasks continue every day.</p>
+        </div>
+        <div class="aw-storyboard-side">
+          <div class="aw-mini-label">IN THE PIPELINE</div>
+          <div class="aw-mini-value" id="awMetric">Too many manual steps</div>
+          <div class="aw-mini-note">Watch the process from inquiry to follow-up.</div>
+        </div>
+      </div>
+
       <div class="aw-ethical-note">Savings figures are modeled estimates. Email sending is not triggered by this presentation.</div>
     </div>
 
