@@ -1947,6 +1947,35 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
  .automation-modal-head h2{font-size:29px}
 }
 
+<style id="automation-project-refresh">
+.automation-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:22px 0 25px}
+.automation-benefits>div{min-width:0;padding:17px 12px;background:var(--panel);border:1px solid var(--border2);display:flex;flex-direction:column;gap:8px}
+.automation-benefit-icon{font:25px var(--serif);color:var(--white)}
+.automation-benefits strong{font:500 17px var(--serif)}
+.automation-benefits small{font:10px/1.45 var(--sans);color:var(--muted)}
+.automation-architecture-trigger{background:transparent;border:1px solid var(--border2);color:var(--white);padding:0;width:100%;position:relative;cursor:zoom-in;display:block;overflow:hidden}
+.automation-architecture-trigger img{width:100%;display:block;transition:transform .3s}
+.automation-architecture-trigger:hover img{transform:scale(1.025)}
+.automation-architecture-label{position:absolute;bottom:10px;right:10px;padding:9px 13px;background:var(--bg);border:1px solid var(--border2);font:600 9px var(--mono);letter-spacing:1px}
+.automation-architecture-trigger:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+.automation-next-project{border-top:1px solid var(--border);padding:24px 0 0;margin-top:35px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font:10px/1.6 var(--mono);letter-spacing:1.1px;color:var(--muted)}
+.automation-next-project span:first-child{color:var(--white)}
+.automation-details-minimal{padding:32px}
+.automation-details-minimal .automation-detail-lead{margin-bottom:30px}
+.automation-story-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.automation-story-cards>div{background:var(--panel);border:1px solid var(--border2);padding:22px;min-height:172px}
+.automation-card-symbol{font:500 29px var(--serif);color:var(--white)}
+.automation-story-cards h3{font:500 34px var(--serif);margin:15px 0 8px}
+.automation-story-cards p{font:12px/1.65 var(--sans);color:var(--muted);margin:0}
+.automation-summary-stat{display:flex;align-items:end;gap:20px;border-top:1px solid var(--border2);padding:25px 0 10px;margin-top:30px}
+.automation-summary-stat strong{font:500 67px/1 var(--serif)}
+.automation-summary-stat span{font:13px/1.5 var(--sans);color:var(--muted);max-width:220px}
+.automation-short-footnote{font:10px/1.6 var(--mono);color:var(--muted);margin:12px 0}
+.automation-modal-architecture{width:min(1400px,100%)}
+.automation-architecture-figure{padding:20px;overflow:auto}
+.automation-architecture-figure img{display:block;width:100%;min-width:800px;background:#f7f7f7}
+.automation-architecture-figure p{font:12px/1.7 var(--mono);color:var(--muted)}
+@media(max-width:720px){.automation-benefits{grid-template-columns:1fr}.automation-story-cards{grid-template-columns:1fr}.automation-story-cards>div{min-height:unset}.automation-details-minimal{padding:22px}.automation-summary-stat strong{font-size:55px}}
 </style>
 </head>
 
@@ -2282,44 +2311,37 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
 
 
 <!-- =====================================================
-     AI AUTOMATION CASE STUDY
+     AI AUTOMATION PROJECTS
 ===================================================== -->
 
 <section class="section automation-case" id="automation" aria-labelledby="automation-title">
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-label">Automation / Case Study 002</div>
-        <h2 class="section-title" id="automation-title">Less manual work.<br>More room to grow.</h2>
+        <div class="section-label">AI Automation / Selected Projects</div>
+        <h2 class="section-title" id="automation-title">Automation built<br>around business.</h2>
       </div>
-      <p class="section-intro">A human-supervised lead management system designed to organize inquiries, prioritize opportunities, and simplify repetitive administration.</p>
+      <p class="section-intro">Practical AI-powered systems for better customer operations, streamlined processes, and more time to grow.</p>
     </div>
 
 
     <div class="automation-layout">
       <div class="automation-story">
-        <div class="project-number">PROJECT / 002 &nbsp;·&nbsp; AI-POWERED LEAD OPERATIONS</div>
+        <div class="project-number">PROJECT / 001 &nbsp;·&nbsp; LEAD OPERATIONS</div>
         <h3><button class="automation-project-title" type="button" id="openAutomationDetailsTitle" aria-haspopup="dialog" aria-controls="automationDetailsModal">AI Lead Generation<br>&amp; Follow-Up <span aria-hidden="true">↗</span></button></h3>
-        <p class="automation-lead">Customer inquiries shouldn't get lost between an inbox, a spreadsheet, and a busy team.</p>
+        <p class="automation-lead">Capture every opportunity. Prioritize the right leads. Keep your team in control.</p>
 
-        <div class="automation-block">
-          <span class="automation-eyebrow">01 / The problem</span>
-          <p>Manually reviewing inquiries, identifying priority prospects, drafting replies, and monitoring follow-ups can slow response preparation and create inconsistent handoffs.</p>
-        </div>
-        <div class="automation-block">
-          <span class="automation-eyebrow">02 / The solution</span>
-          <p>I designed an n8n workflow that captures and validates lead data, uses Google Gemini to classify inquiries and prepare personalized replies, routes drafts for human approval, and checks follow-up dates, replies, bounced messages, and potential duplicates.</p>
-        </div>
-        <div class="automation-block">
-          <span class="automation-eyebrow">03 / What was demonstrated</span>
-          <p>Lead qualification and initial email stages were tested with fictional inquiries. In a delivery-failure scenario, the workflow correctly blocked follow-up eligibility after a bounced email. The full follow-up sequence and unattended sending remain future integration work.</p>
+        <div class="automation-benefits">
+          <div><span class="automation-benefit-icon">↳</span><strong>Capture</strong><small>Keep every inquiry organized</small></div>
+          <div><span class="automation-benefit-icon">✦</span><strong>Qualify</strong><small>Put high-value leads first</small></div>
+          <div><span class="automation-benefit-icon">✓</span><strong>Follow up</strong><small>Human-approved communication</small></div>
         </div>
         <div class="tags automation-tags">
           <span class="tag">n8n</span><span class="tag">Google Gemini</span><span class="tag">Gmail API</span>
           <span class="tag">JavaScript</span><span class="tag">Webhooks</span><span class="tag">Docker</span>
           <span class="tag">Data Tables</span><span class="tag">Human Approval</span>
         </div>
-        <div class="automation-actions"><button type="button" class="btn btn-light" id="openAutomationDetails" aria-haspopup="dialog" aria-controls="automationDetailsModal">Explore Project Details ↗</button><a class="btn" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss a Project ↗</a></div>
+        <div class="automation-actions"><button type="button" class="btn btn-light" id="openAutomationDetails" aria-haspopup="dialog" aria-controls="automationDetailsModal">Explore Workflow ↗</button><a class="btn" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss a Project ↗</a></div>
       </div>
 
       <div class="automation-visual">
@@ -2327,26 +2349,26 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
           <span>System architecture / n8n</span>
           <span>Original workflow screenshot</span>
         </div>
-        <a href="assets/images/ai-lead-workflow.svg" target="_blank" rel="noopener" aria-label="View the full AI automation workflow screenshot">
-          <img src="assets/images/ai-lead-workflow.svg" loading="lazy" width="760" height="284"
-            alt="Original n8n workflow showing lead intake, Gemini qualification, human approval and follow-up monitoring" />
-        </a>
-        <p class="automation-image-note">Select the screenshot to inspect the full workflow. Demo uses fictional customer information.</p>
+        <button type="button" class="automation-architecture-trigger" id="openWorkflowModal" aria-haspopup="dialog" aria-controls="workflowModal">
+          <img src="assets/images/ai-lead-workflow.svg" loading="lazy" width="760" height="284" alt="n8n workflow architecture overview" />
+          <span class="automation-architecture-label">EXPLORE WORKFLOW ↗</span>
+        </button>
+        <p class="automation-image-note">100 interconnected workflow nodes · Click to inspect the architecture.</p>
 
         <div class="automation-flow" aria-label="Core workflow steps">
           <span>Capture</span><b>→</b><span>Qualify</span><b>→</b><span>Review</span><b>→</b><span>Follow up</span>
         </div>
         <div class="automation-efficiency">
           <div>
-            <span class="automation-eyebrow">Illustrative efficiency scenario</span>
-            <strong>~4.2 hours</strong>
-            <small>of potential preparation time saved per 50 inquiries</small>
+            <span class="automation-eyebrow">Projected at 180 inquiries / month</span>
+            <strong>15 hours</strong>
+            <small>potential monthly preparation time saved</small>
           </div>
-          <p>Assumes manual triage and draft preparation take 8 minutes per inquiry and AI-assisted review takes 3 minutes: 5 minutes saved × 50 inquiries = 250 minutes. <em>Estimate only; not a measured client result.</em></p>
+          <p>8 min manual vs. 3 min AI-assisted × 180 inquiries. <em>Projected savings; actual results vary.</em></p>
         </div>
 
         <button type="button" class="automation-preview" id="openAnimationModal" aria-haspopup="dialog" aria-controls="animationModal">
-          <span class="automation-preview-heading"><span>INTERACTIVE 2D WALKTHROUGH</span><span>02:30 / 30 SCENES</span></span>
+          <span class="automation-preview-heading"><span>SEE HOW IT WORKS</span><span>02:30 / 30 SCENES</span></span>
           <svg class="automation-preview-image" viewBox="0 0 560 220" role="img" aria-label="Three AI assistant characters coordinating incoming leads along a workflow">
             <defs><pattern id="apGrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="currentColor" stroke-opacity=".09"/></pattern></defs>
             <rect width="560" height="220" rx="7" class="automation-preview-bg"/>
@@ -2375,12 +2397,13 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
             <text x="457" y="179" class="automation-preview-svg-label" text-anchor="middle">COORDINATE</text>
           </svg>
           <span class="automation-preview-bottom">
-            <span class="automation-preview-caption"><strong>See the automation in motion</strong><span>From first inquiry to human-reviewed follow-up.</span></span>
+            <span class="automation-preview-caption"><strong>Watch the workflow in motion</strong><span>From first inquiry to human-reviewed follow-up.</span></span>
             <span class="automation-preview-play" aria-hidden="true">▶</span>
           </span>
         </button>
       </div>
     </div>
+    <div class="automation-next-project"><span>MORE AUTOMATION PROJECTS</span><span>Customer support · Appointments · Documents · Publishing</span></div>
   </div>
 </section>
 
@@ -3030,7 +3053,14 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
 
 </main>
 
-<!-- AI AUTOMATION PROJECT DETAIL & PRESENTATION MODALS -->
+<!-- AI AUTOMATION PROJECT MODALS -->
+<div class="automation-modal" id="workflowModal" role="dialog" aria-modal="true" aria-labelledby="workflowModalTitle" aria-hidden="true" hidden>
+ <div class="automation-modal-panel automation-modal-architecture">
+  <div class="automation-modal-head"><div><div class="section-label">n8n / Workflow Architecture</div><h2 id="workflowModalTitle">Behind the automation</h2></div><button type="button" class="automation-modal-close" data-close-automation-modal aria-label="Close workflow view">×</button></div>
+  <div class="automation-architecture-figure"><img src="assets/images/ai-lead-workflow.svg" alt="Full connected n8n lead generation and follow-up workflow" /><p>Lead capture → AI qualification → Human approval → Follow-up safeguards</p></div>
+ </div>
+</div>
+
 <div class="automation-modal" id="animationModal" role="dialog" aria-modal="true" aria-labelledby="animationModalTitle" aria-hidden="true" hidden>
   <div class="automation-modal-panel automation-modal-film">
     <div class="automation-modal-head"><div><div class="section-label">Interactive Process Presentation</div><h2 id="animationModalTitle">AI Lead Generation &amp; Follow-Up</h2></div>
@@ -3067,7 +3097,7 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
         <div class="aw-storyboard-side">
           <div class="aw-mini-label">IN THE PIPELINE</div>
           <div class="aw-mini-value" id="awMetric">Too many manual steps</div>
-          <div class="aw-mini-note">Narration displayed as captions. Visual-only explainer; no real data is submitted.</div>
+          <div class="aw-mini-note">Watch the process from inquiry to follow-up.</div>
         </div>
       </div>
 
@@ -3094,7 +3124,7 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
           <span class="aw-player-footnote">30 scenes · 150 seconds · Interactive 2D story</span>
         </div>
       </div>
-      <div class="aw-ethical-note">Business workflow illustration using fictional examples. Efficiency figures are scenario estimates, not verified customer results. Email delivery is not triggered by this animation.</div>
+      <div class="aw-ethical-note">Savings figures are modeled estimates. Email sending is not triggered by this presentation.</div>
     </div>
 
 
@@ -3103,19 +3133,19 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
 
 <div class="automation-modal" id="automationDetailsModal" role="dialog" aria-modal="true" aria-labelledby="automationDetailsTitle" aria-hidden="true" hidden>
   <div class="automation-modal-panel automation-modal-details">
-    <div class="automation-modal-head"><div><div class="section-label">Project / 002 · AI Automation</div><h2 id="automationDetailsTitle">AI Lead Generation &amp; Follow-Up</h2></div>
+    <div class="automation-modal-head"><div><div class="section-label">AI Automation / Project 001</div><h2 id="automationDetailsTitle">AI Lead Generation &amp; Follow-Up</h2></div>
       <button type="button" class="automation-modal-close" aria-label="Close project details" data-close-automation-modal>×</button>
     </div>
-    <div class="automation-details-content">
-      <p class="automation-detail-lead">Capture customer inquiries, prioritize opportunities, and support timely communication—with a person making important decisions.</p>
-      <div class="automation-detail-grid">
-        <section><span class="automation-eyebrow">01 / The business challenge</span><h3>Leads shouldn't get lost in busy work.</h3><p>Manual data entry, disconnected inboxes, slow response preparation, and inconsistent follow-up tracking create unnecessary administrative work for agencies, small businesses, and e-commerce teams.</p></section>
-        <section><span class="automation-eyebrow">02 / How the system works</span><h3>Connected from inquiry to review.</h3><p>Incoming webhook submissions are validated and stored. Google Gemini assists with priority classification and personalized email drafting. Human reviewers approve or request revisions. Gmail drafts and scheduled follow-up checks support controlled communication.</p></section>
-        <section><span class="automation-eyebrow">03 / Built-in safeguards</span><h3>Automation with checkpoints.</h3><p>Input validation, draft review, reply inspection, bounce detection, and duplicate checks provide control over the process. Sending is intentionally kept under manual control in the current implementation.</p></section>
-        <section><span class="automation-eyebrow">04 / Potential efficiency</span><h3>Time back for client relationships.</h3><p>An illustrative calculation assumes preparation time drops from eight minutes to three minutes per inquiry. At 50 inquiries, that represents approximately 4.2 hours of potential time saved—not a measured client result.</p></section>
+    <div class="automation-details-content automation-details-minimal">
+      <p class="automation-detail-lead">Less admin. Faster lead preparation. More time for customers.</p>
+      <div class="automation-story-cards">
+        <div><span class="automation-card-symbol">01 ↳</span><h3>Capture</h3><p>Inquiries organized automatically</p></div>
+        <div><span class="automation-card-symbol">02 ✦</span><h3>Qualify</h3><p>AI prioritization and tailored drafts</p></div>
+        <div><span class="automation-card-symbol">03 ✓</span><h3>Review</h3><p>Human oversight and follow-up checks</p></div>
       </div>
-      <div class="tags"><span class="tag">n8n</span><span class="tag">Google Gemini</span><span class="tag">Gmail API</span><span class="tag">Webhooks</span><span class="tag">Docker</span><span class="tag">JavaScript</span><span class="tag">Human Approval</span></div>
-      <div class="automation-modal-cta"><button class="btn btn-light" id="detailsWatchAnimation" type="button">Watch the 2D Walkthrough ▶</button><a class="btn" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss Your Workflow ↗</a></div>
+      <div class="automation-summary-stat"><strong>15 hrs</strong><span>potential time saved per month*</span></div>
+      <p class="automation-short-footnote">*Modeled: 180 inquiries/month × 5 minutes saved in preparation each. Actual results vary.</p>
+      <div class="automation-modal-cta"><button class="btn btn-light" id="detailsWatchAnimation" type="button">Watch How It Works ▶</button><a class="btn" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Let's Talk ↗</a></div>
     </div>
   </div>
 </div>
