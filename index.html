@@ -1704,7 +1704,7 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
 }
 
 </style>
-<link rel="stylesheet" href="assets/automation-walkthrough.css">
+<link rel="stylesheet" href="assets/automation-walkthrough.css?v=2">
 </head>
 
 <body>
@@ -2053,53 +2053,65 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
     </div>
 
 
-    <!-- Interactive illustrated process walkthrough; client-side only -->
-    <div class="aw" id="aiWalkthrough" aria-label="Interactive six-stage AI lead automation walkthrough">
-      <div class="aw-top">
-        <div class="aw-top-left"><span class="aw-dot" aria-hidden="true"></span><span>AI Automation / Process Simulator</span></div>
-        <span class="aw-top-note">Illustrative demo · No live customer data</span>
+    <!-- 30-scene illustrated automation story. Runs entirely in the visitor's browser. -->
+    <div class="aw aw-film" id="aiWalkthrough" aria-label="Interactive 2D AI lead automation explainer">
+      <div class="aw-film-top">
+        <div class="aw-film-brand"><span class="aw-live-dot" aria-hidden="true"></span><span>AI LEAD GENERATION &amp; FOLLOW-UP</span></div>
+        <div class="aw-film-meta"><span>2D EXPLAINER</span><span class="aw-film-separator">/</span><span>02:30</span></div>
       </div>
-      <div class="aw-grid">
-        <div class="aw-diagram">
-          <div class="aw-heading"><span>01 / Workflow map</span><span>Choose any step</span></div>
-          <div class="aw-flow" role="group" aria-label="Workflow stages">
-            <div class="aw-step-line" aria-hidden="true"><div class="aw-step-line-fill" id="awStepLine"></div></div>
-            <button type="button" class="aw-step is-active" aria-pressed="true" aria-current="step" aria-label="Step 1: Capture lead"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">↳</span></span><span class="aw-step-label">Capture</span></button>
-            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 2: Qualify lead"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">◈</span></span><span class="aw-step-label">Qualify</span></button>
-            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 3: Draft response"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">✎</span></span><span class="aw-step-label">Draft</span></button>
-            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 4: Human approval"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">✓</span></span><span class="aw-step-label">Approve</span></button>
-            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 5: Gmail draft"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">✉</span></span><span class="aw-step-label">Gmail</span></button>
-            <button type="button" class="aw-step" aria-pressed="false" aria-label="Step 6: Follow-up monitoring"><span class="aw-step-box"><span class="aw-step-symbol" aria-hidden="true">↻</span></span><span class="aw-step-label">Monitor</span></button>
-          </div>
-          <div class="aw-moving-data" aria-hidden="true">
-            <div class="aw-orbit"></div><div class="aw-orbit"></div>
-            <div class="aw-packet"><strong id="awPacket">NEW LEAD</strong><small id="awPacketSub">Webhook received</small></div>
-          </div>
-          <p class="aw-scene-caption" id="awCaption">A form submission becomes a structured lead record.</p>
+
+      <div class="aw-film-screen">
+        <div class="aw-scene-art" id="awSceneArt" role="img" aria-label="Animated illustration of a business owner and an AI automation workflow">
+          <div class="aw-film-loading" aria-hidden="true">AI <span>↗</span> WORKFLOW</div>
         </div>
-        <div class="aw-story" aria-live="polite" aria-atomic="true">
-          <div class="aw-story-top"><span>02 / Business impact</span><span class="aw-stage-num" id="awIndex">01 / 06</span></div>
-          <h3 class="aw-title" id="awTitle">Every inquiry, captured.</h3>
-          <p class="aw-description" id="awDescription">A visitor submits a project inquiry. The webhook validates the name, email, service, budget and consent before storing the lead.</p>
-          <div class="aw-proof">
-            <span class="aw-proof-label">Example outcome</span>
-            <span class="aw-proof-value" id="awProof">Example: Maria Santos · Website development · $4,500 budget</span>
-          </div>
+        <div class="aw-screen-top">
+          <span class="aw-phase" id="awPhase">01 / THE PROBLEM</span>
+          <span class="aw-scene-counter" id="awSceneCounter">SCENE 01 / 30</span>
+        </div>
+        <div class="aw-screen-bottom">
+          <span class="aw-screen-tag" id="awVisualTag">CUSTOMER INQUIRIES</span>
+          <span class="aw-screen-status" id="awStatus">INTERACTIVE WALKTHROUGH</span>
         </div>
       </div>
-      <div class="aw-control-bar">
-        <div class="aw-controls" role="group" aria-label="Walkthrough controls">
-          <button class="aw-btn" id="awPrev" type="button" aria-label="Previous stage">← Prev</button>
-          <button class="aw-btn aw-btn-primary" id="awPlay" type="button" aria-label="Play walkthrough">▶ Play</button>
-          <button class="aw-btn" id="awNext" type="button" aria-label="Next stage">Next →</button>
-          <button class="aw-btn" id="awReplay" type="button" aria-label="Replay from first stage">↺</button>
+
+      <div class="aw-storyboard">
+        <div class="aw-storyboard-copy" aria-live="polite" aria-atomic="true">
+          <div class="aw-storyboard-eyebrow" id="awCategory">ACT I — THE PROBLEM</div>
+          <h3 id="awTitle">Your business is growing.</h3>
+          <p class="aw-voiceover" id="awVoiceover">Your business is growing. But so is the workload.</p>
+          <p class="aw-subtext" id="awDescription">Customer messages multiply while the same data entry and follow-up tasks continue every day.</p>
         </div>
-        <div class="aw-progress-wrap" aria-label="Walkthrough progress">
-          <div class="aw-progress" aria-hidden="true"><div class="aw-progress-fill" id="awProgress"></div></div>
-          <span class="aw-time" id="awTime">1 / 6</span>
+        <div class="aw-storyboard-side">
+          <div class="aw-mini-label">IN THE PIPELINE</div>
+          <div class="aw-mini-value" id="awMetric">Too many manual steps</div>
+          <div class="aw-mini-note">Narration displayed as captions. Visual-only explainer; no real data is submitted.</div>
         </div>
       </div>
-      <p class="aw-disclaimer">This is an interactive illustration of the architecture, not a live execution. Gmail sending remains manual and disconnected from automatic triggers.</p>
+
+      <div class="aw-film-navigation">
+        <div class="aw-act-tabs" role="group" aria-label="Jump to an act">
+          <button class="aw-act active" type="button" data-aw-act="0" aria-pressed="true">01 Problem</button>
+          <button class="aw-act" type="button" data-aw-act="6" aria-pressed="false">02 Solution</button>
+          <button class="aw-act" type="button" data-aw-act="10" aria-pressed="false">03 Workflow</button>
+          <button class="aw-act" type="button" data-aw-act="23" aria-pressed="false">04 Impact</button>
+          <button class="aw-act" type="button" data-aw-act="28" aria-pressed="false">05 Connect</button>
+        </div>
+        <div class="aw-seek-row">
+          <span id="awElapsed" class="aw-timecode">00:00</span>
+          <input type="range" id="awSeek" class="aw-seek" min="0" max="150" step="0.1" value="0" aria-label="Seek animation timeline" />
+          <span class="aw-timecode">02:30</span>
+        </div>
+        <div class="aw-player-controls">
+          <div class="aw-control-group">
+            <button class="aw-control-btn" type="button" id="awPrev" aria-label="Previous scene">← <span>Previous</span></button>
+            <button class="aw-control-btn aw-control-primary" type="button" id="awPlay" aria-label="Play animation">▶ <span>Play Film</span></button>
+            <button class="aw-control-btn" type="button" id="awNext" aria-label="Next scene"><span>Next</span> →</button>
+            <button class="aw-control-btn" type="button" id="awReplay" aria-label="Replay from start">↺ <span>Replay</span></button>
+          </div>
+          <span class="aw-player-footnote">30 scenes · 150 seconds · Interactive 2D story</span>
+        </div>
+      </div>
+      <div class="aw-ethical-note">Business workflow illustration using fictional examples. Efficiency figures are scenario estimates, not verified customer results. Email delivery is not triggered by this animation.</div>
     </div>
 
     <div class="automation-layout">
@@ -3732,6 +3744,6 @@ document.addEventListener(
 );
 </script>
 
-<script src="assets/automation-walkthrough.js" defer></script>
+<script src="assets/automation-walkthrough.js?v=2" defer></script>
 </body>
 </html>
