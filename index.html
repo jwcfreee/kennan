@@ -1614,6 +1614,95 @@ a{
     }
 }
 
+
+
+/* =========================================================
+   THEME TOGGLE & AUTOMATION CASE STUDY
+========================================================= */
+.theme-toggle{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  border:1px solid var(--border2); background:transparent; color:var(--white);
+  min-height:38px; padding:0 13px; cursor:pointer; font-family:var(--mono);
+  font-size:10px; letter-spacing:.4px; white-space:nowrap; transition:.2s;
+}
+.theme-toggle:hover,.theme-toggle:focus-visible{border-color:var(--white);outline-offset:3px}
+.theme-icon{font-size:17px;line-height:1}
+.automation-case{background:var(--bg2)}
+.automation-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,70px);align-items:start}
+.automation-story h3{font-family:var(--serif);font-size:clamp(50px,5vw,78px);font-weight:500;line-height:1;letter-spacing:-2px;margin:0 0 26px}
+.automation-lead{font-size:17px!important;color:var(--white)!important;line-height:1.6!important}
+.automation-story p,.automation-block p{color:var(--muted);line-height:1.85;font-size:13px}
+.automation-block{border-top:1px solid var(--border);padding:19px 0 12px}
+.automation-eyebrow{display:block;color:var(--silver);font:500 9px var(--mono);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:11px}
+.automation-visual{min-width:0;border:1px solid var(--border2);background:var(--panel);padding:17px}
+.automation-visual-header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;text-transform:uppercase;font:9px var(--mono);letter-spacing:1px;color:var(--muted);padding:5px 3px 16px}
+.automation-visual a{display:block;line-height:0;border:1px solid var(--border);background:#f4f4f4}
+.automation-visual img{display:block;width:100%;height:auto}
+.automation-image-note{color:var(--muted);font:10px/1.7 var(--mono);margin:12px 3px 22px}
+.automation-flow{border-block:1px solid var(--border);padding:20px 6px;display:flex;align-items:center;justify-content:space-between;gap:7px;font:10px var(--mono);text-transform:uppercase;letter-spacing:.7px}
+.automation-flow b{color:var(--muted);font-weight:400}
+.automation-efficiency{padding:26px 5px 10px;display:grid;grid-template-columns:1fr 1.1fr;gap:26px;align-items:start}
+.automation-efficiency strong{display:block;font-family:var(--serif);font-size:clamp(36px,4vw,62px);font-weight:500;letter-spacing:-2px;line-height:1}
+.automation-efficiency small{display:block;margin-top:10px;color:var(--muted);font-size:11px;line-height:1.6}
+.automation-efficiency p{color:var(--muted);line-height:1.75;font-size:11px;margin:0}
+.automation-efficiency em{font-style:normal;color:var(--silver)}
+html[data-theme="light"]{
+  color-scheme:light; --bg:#faf9f6;--bg2:#f2f0ec;--panel:#fff;--panel2:#f5f3ef;
+  --white:#151515;--silver:#444;--muted:#555;--muted2:#626262;
+  --border:#d8d5d0;--border2:#c9c5bd;--accent:#262626;
+}
+html[data-theme="light"] body{background:var(--bg);color:var(--white)}
+html[data-theme="light"] .nav{background:rgba(250,249,246,.94);border-color:var(--border)}
+html[data-theme="light"] .brand-mark,html[data-theme="light"] .brand-copy{color:var(--white)}
+html[data-theme="light"] .nav-links a{color:#333}
+html[data-theme="light"] .nav-links a:hover{color:#000}
+html[data-theme="light"] .nav-contact{color:#111!important;border-color:#bbb!important}
+html[data-theme="light"] .nav-contact:hover{background:#151515;color:#fff!important}
+html[data-theme="light"] .hero-kicker,html[data-theme="light"] .hero-subtitle{color:#444}
+html[data-theme="light"] .hero-description,html[data-theme="light"] .section-intro,
+html[data-theme="light"] .nanik-copy p,html[data-theme="light"] .about-copy p,
+html[data-theme="light"] .work-info p,html[data-theme="light"] .exp-desc,
+html[data-theme="light"] .contact p{color:#555}
+html[data-theme="light"] .hero-image:before{background:linear-gradient(90deg,#faf9f6 0%,rgba(250,249,246,.65) 12%,rgba(250,249,246,.08) 45%,transparent 100%),linear-gradient(0deg,#faf9f6 0%,transparent 25%)}
+html[data-theme="light"] .capabilities,html[data-theme="light"] .experience{background:#f4f2ee}
+html[data-theme="light"] .cap:hover,html[data-theme="light"] .exp:hover{background:#eae7e1}
+html[data-theme="light"] .cap-title,html[data-theme="light"] .cap-icon{color:#272727}
+html[data-theme="light"] .nanik{background:radial-gradient(circle at 80% 10%,rgba(0,0,0,.03),transparent 30%),#faf9f6}
+html[data-theme="light"] .tag,html[data-theme="light"] .mini-tags span{border-color:#c9c5bd;color:#424242}
+html[data-theme="light"] .nanik-shot,html[data-theme="light"] .work-card,
+html[data-theme="light"] .tool{background:#fff;border-color:#dedbd5;color:#282828}
+html[data-theme="light"] .work-card:hover{background:#f1efeb}
+html[data-theme="light"] .work-media{border-color:#dedbd5;background:#f4f2ee}
+html[data-theme="light"] .nanik-live{background:#fff;border-color:#d2cec6;color:#333}
+html[data-theme="light"] .nanik-main-shot img{box-shadow:0 25px 70px rgba(0,0,0,.13);border-color:#dad7d1}
+html[data-theme="light"] .tools-shell:before{background:linear-gradient(90deg,#faf9f6,transparent)}
+html[data-theme="light"] .tools-shell:after{background:linear-gradient(-90deg,#faf9f6,transparent)}
+html[data-theme="light"] .contact{background:radial-gradient(circle at center,rgba(0,0,0,.035),transparent 40%),#faf9f6}
+html[data-theme="light"] .btn{color:#222;border-color:#96918b;background:transparent}
+html[data-theme="light"] .btn:hover{background:#e7e4de}
+html[data-theme="light"] .btn-light{color:#fff;background:#181818;border-color:#181818}
+html[data-theme="light"] .btn-light:hover{background:#333;color:#fff}
+html[data-theme="light"] .contact-modal{background:rgba(20,20,20,.55)}
+html[data-theme="light"] .contact-modal-box,html[data-theme="light"] .modal-panel{background:#fff;color:#181818;border-color:#ddd}
+html[data-theme="light"] .modal{background:rgba(240,238,234,.97)}
+html[data-theme="light"] .modal-close,html[data-theme="light"] .contact-modal-close{color:#222;background:#f4f2ef;border-color:#d4d0c9}
+html[data-theme="light"] .contact-option{color:#222;border-color:#ddd}
+html[data-theme="light"] .contact-option:hover{background:#f2f0ec}
+html[data-theme="light"] .filter{color:#444;background:#f7f6f3;border-color:#ccc}
+html[data-theme="light"] .filter.active{color:#fff;background:#1d1d1d}
+html[data-theme="light"] .modal-item{background:#fff;border-color:#ddd}
+html[data-theme="light"] .lightbox{background:rgba(255,255,255,.96)}
+html[data-theme="light"] .footer-copy{color:#555}
+html[data-theme="light"] ::selection{background:#252525;color:#fff}
+@media(max-width:1050px){.automation-layout{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .theme-toggle{padding:0 9px;min-width:40px}
+  .theme-text{display:none}
+  .automation-efficiency{grid-template-columns:1fr}
+  .automation-flow{flex-wrap:wrap;justify-content:center}
+  .automation-visual{padding:10px}
+}
+
 </style>
 </head>
 
@@ -1644,12 +1733,14 @@ a{
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
+    <a href="#automation">AI Automation</a>
     <a href="#experience">Experience</a>
     <a href="#skills">Skills</a>
 
     <a class="nav-contact" href="#contact">
         Contact
     </a>
+    <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to light mode" aria-pressed="false"><span aria-hidden="true" class="theme-icon">☼</span><span class="theme-text">Light mode</span></button>
 
 </nav>
 
@@ -1944,6 +2035,74 @@ a{
 
 </section>
 
+
+
+<!-- =====================================================
+     AI AUTOMATION CASE STUDY
+===================================================== -->
+
+<section class="section automation-case" id="automation" aria-labelledby="automation-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Automation / Case Study 002</div>
+        <h2 class="section-title" id="automation-title">Less manual work.<br>More room to grow.</h2>
+      </div>
+      <p class="section-intro">A human-supervised lead management prototype designed to help teams respond consistently, prioritize opportunities, and reduce repetitive administrative work.</p>
+    </div>
+
+    <div class="automation-layout">
+      <div class="automation-story">
+        <div class="project-number">PROJECT / 002 &nbsp;·&nbsp; PORTFOLIO PROTOTYPE</div>
+        <h3>AI Lead Generation<br>&amp; Follow-Up</h3>
+        <p class="automation-lead">Customer inquiries shouldn't get lost between an inbox, a spreadsheet, and a busy team.</p>
+
+        <div class="automation-block">
+          <span class="automation-eyebrow">01 / The problem</span>
+          <p>Manually reviewing inquiries, identifying priority prospects, drafting replies, and monitoring follow-ups can slow response preparation and create inconsistent handoffs.</p>
+        </div>
+        <div class="automation-block">
+          <span class="automation-eyebrow">02 / The solution</span>
+          <p>I designed an n8n workflow that captures and validates lead data, uses Google Gemini to classify inquiries and prepare personalized replies, routes drafts for human approval, and checks follow-up dates, replies, bounced messages, and potential duplicates.</p>
+        </div>
+        <div class="automation-block">
+          <span class="automation-eyebrow">03 / What was demonstrated</span>
+          <p>Lead qualification and initial email stages were tested with fictional inquiries. In a delivery-failure scenario, the workflow correctly blocked follow-up eligibility after a bounced email. The full follow-up sequence and unattended sending remain future integration work.</p>
+        </div>
+        <div class="tags automation-tags">
+          <span class="tag">n8n</span><span class="tag">Google Gemini</span><span class="tag">Gmail API</span>
+          <span class="tag">JavaScript</span><span class="tag">Webhooks</span><span class="tag">Docker</span>
+          <span class="tag">Data Tables</span><span class="tag">Human Approval</span>
+        </div>
+        <a class="btn btn-light" href="mailto:Egloriakennan11@gmail.com?subject=AI%20Automation%20Inquiry">Discuss an Automation Project ↗</a>
+      </div>
+
+      <div class="automation-visual">
+        <div class="automation-visual-header">
+          <span>System architecture / n8n</span>
+          <span>Original workflow screenshot</span>
+        </div>
+        <a href="assets/images/ai-lead-workflow.svg" target="_blank" rel="noopener" aria-label="View the full AI automation workflow screenshot">
+          <img src="assets/images/ai-lead-workflow.svg" loading="lazy" width="760" height="284"
+            alt="Original n8n workflow showing lead intake, Gemini qualification, human approval and follow-up monitoring" />
+        </a>
+        <p class="automation-image-note">Select the screenshot to inspect the full workflow. Demo uses fictional customer information.</p>
+
+        <div class="automation-flow" aria-label="Core workflow steps">
+          <span>Capture</span><b>→</b><span>Qualify</span><b>→</b><span>Review</span><b>→</b><span>Follow up</span>
+        </div>
+        <div class="automation-efficiency">
+          <div>
+            <span class="automation-eyebrow">Illustrative efficiency scenario</span>
+            <strong>~4.2 hours</strong>
+            <small>of potential preparation time saved per 50 inquiries</small>
+          </div>
+          <p>Assumes manual triage and draft preparation take 8 minutes per inquiry and AI-assisted review takes 3 minutes: 5 minutes saved × 50 inquiries = 250 minutes. <em>Estimate only; not a measured client result.</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- =====================================================
      SELECTED WORK
@@ -3076,6 +3235,29 @@ a{
 
 <script>
 
+/* THEME: persistent light/dark preference, dark by default */
+(function(){
+  const button=document.getElementById('themeToggle');
+  if(!button)return;
+  function syncTheme(){
+    const light=document.documentElement.dataset.theme==='light';
+    button.setAttribute('aria-pressed',String(light));
+    button.setAttribute('aria-label',light?'Switch to dark mode':'Switch to light mode');
+    button.querySelector('.theme-icon').textContent=light?'☾':'☼';
+    button.querySelector('.theme-text').textContent=light?'Dark mode':'Light mode';
+    const color=document.querySelector('meta[name="theme-color"]');
+    if(color) color.setAttribute('content',light?'#faf9f6':'#050505');
+  }
+  try{document.documentElement.dataset.theme=localStorage.getItem('kennan-theme')==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}
+  syncTheme();
+  button.addEventListener('click',function(){
+    const next=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=next;
+    try{localStorage.setItem('kennan-theme',next)}catch(e){}
+    syncTheme();
+  });
+})();
+
 /* =========================================================
    TOOLS
 ========================================================= */
@@ -3150,6 +3332,11 @@ const tools = [
 ['Shopify',null],
 ['DSers',null],
 ['OpenRouter',null],
+['n8n',null],
+['Google Gemini',null],
+['Gmail API',null],
+['Docker',null],
+['Webhooks',null],
 ['ChatGPT',null],
 ['Canva',null],
 ['CapCut',null],
