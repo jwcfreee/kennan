@@ -1870,6 +1870,83 @@ html[data-theme="light"] ::selection{background:#252525;color:#fff}
  .aw-film *,.aw-film *::before,.aw-film *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 
+<style id="automation-modal-styles">
+
+/* AI AUTOMATION: space-filling preview and accessible presentation/project dialogs */
+.automation-visual{display:flex;flex-direction:column}
+.automation-preview{
+  margin-top:24px;width:100%;min-height:258px;padding:0;
+  display:flex;flex-direction:column;justify-content:space-between;
+  color:var(--white);text-align:left;cursor:pointer;font-family:var(--sans);
+  border:1px solid var(--border2);background:var(--panel2);
+  overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s
+}
+.automation-preview:hover{border-color:var(--white);transform:translateY(-2px);box-shadow:0 16px 35px rgba(0,0,0,.16)}
+.automation-preview:focus-visible,.automation-project-title:focus-visible,.automation-modal-close:focus-visible{
+  outline:2px solid var(--white);outline-offset:4px
+}
+.automation-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 17px 11px;font:600 9px var(--mono);letter-spacing:1.2px}
+.automation-preview-heading span:last-child{color:var(--muted);font-weight:400}
+.automation-preview-image{display:block;width:100%;height:auto;max-height:235px;flex:1;min-height:140px;object-fit:contain;background:#101a2e;color:#7d99c3}
+.automation-preview-bg{fill:#101a2e}
+.automation-preview-line{stroke:#7ca8ef;stroke-width:2.5;stroke-dasharray:9 9;opacity:.62}
+.automation-bot-blue{fill:#4d7dff;stroke:#9dbcff;stroke-width:2}
+.automation-bot-mint{fill:#40bfa0;stroke:#9be6d6;stroke-width:2}
+.automation-bot-white{fill:#e6ecf6;stroke:#fff;stroke-width:2}
+.automation-bot-face{fill:#172039}
+.automation-preview-svg-label{fill:#edf3ff;font:600 13px var(--mono);letter-spacing:1.5px}
+.automation-preview-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 17px}
+.automation-preview-caption{display:flex;flex-direction:column;gap:5px;min-width:0}
+.automation-preview-caption strong{font-size:14px;font-weight:600}
+.automation-preview-caption span{font-size:11px;line-height:1.4;color:var(--muted)}
+.automation-preview-play{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;background:var(--white);color:var(--panel);border-radius:50%;font-size:13px;padding-left:2px;transition:transform .2s}
+.automation-preview:hover .automation-preview-play{transform:scale(1.08)}
+.automation-project-title{font:inherit;letter-spacing:inherit;line-height:inherit;color:inherit;background:none;border:0;padding:0;text-align:left;cursor:pointer}
+.automation-project-title span{font:20px var(--mono);vertical-align:middle}
+.automation-project-title:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:7px}
+.automation-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.automation-modal[hidden]{display:none!important}
+.automation-modal{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.83);backdrop-filter:blur(14px)}
+.automation-modal-panel{width:min(1150px,100%);max-height:min(92vh,980px);overflow-y:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--border2);color:var(--white);box-shadow:0 35px 110px rgba(0,0,0,.45)}
+.automation-modal-head{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:19px 27px;border-bottom:1px solid var(--border2);background:var(--bg)}
+.automation-modal-head .section-label{margin-bottom:6px;font-size:8px}
+.automation-modal-head h2{font:500 clamp(26px,3vw,39px)/1.05 var(--serif);letter-spacing:-1px;margin:0}
+.automation-modal-close{width:44px;height:44px;flex-shrink:0;display:grid;place-items:center;border:1px solid var(--border2);background:var(--panel);color:var(--white);font-size:27px;cursor:pointer}
+.automation-modal-close:hover{background:var(--panel2)}
+.automation-modal-film{width:min(1160px,100%)}
+.automation-modal-film .aw-film{margin:0;border:0;border-top:0}
+.automation-modal-film .aw-film-screen{min-height:300px}
+.automation-modal-details{width:min(900px,100%)}
+.automation-details-content{padding:29px 35px 40px}
+.automation-detail-lead{font:500 clamp(19px,2.6vw,27px)/1.4 var(--serif);margin:0 0 28px;max-width:760px}
+.automation-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 34px;margin:0 0 30px}
+.automation-detail-grid section{border-top:1px solid var(--border2);padding-top:20px}
+.automation-detail-grid h3{font:500 26px/1.1 var(--serif);margin:0 0 11px}
+.automation-detail-grid p{font:13px/1.8 var(--sans);color:var(--muted);margin:0}
+.automation-modal-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+body.automation-dialog-open{overflow:hidden}
+html[data-theme="light"] .automation-preview{background:#fff}
+html[data-theme="light"] .automation-preview-heading{color:#141414}
+html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
+@media(max-width:850px){
+ .automation-preview{min-height:255px}
+ .automation-modal{padding:12px}
+ .automation-modal-panel{max-height:94vh}
+ .automation-modal-head{padding:16px 18px}
+ .automation-details-content{padding:25px 20px}
+}
+@media(max-width:580px){
+ .automation-preview-image{min-height:130px}
+ .automation-detail-grid{grid-template-columns:1fr;gap:20px}
+ .automation-preview-heading{font-size:8px;padding:12px}
+ .automation-preview-bottom{padding:12px}
+ .automation-preview-caption strong{font-size:13px}
+ .automation-modal{padding:0}
+ .automation-modal-panel{width:100%;height:100dvh;max-height:100dvh;border:0}
+ .automation-modal-film .aw-film-screen{min-height:200px}
+ .automation-modal-head h2{font-size:29px}
+}
+
 </style>
 </head>
 
@@ -4280,6 +4357,57 @@ document.addEventListener(
   setUi();
   // Playback begins only on user command; reduced-motion viewers can advance frame by frame.
 })();
+  root.addEventListener('aw:pause',pause);
+</script>
+<script id="automation-modal-runtime">
+
+/* Portfolio project and animation dialogs: keyboard accessible, no page navigation. */
+(() => {
+  'use strict';
+  const animation=document.getElementById('animationModal');
+  const details=document.getElementById('automationDetailsModal');
+  const film=document.getElementById('aiWalkthrough');
+  if(!animation||!details||!film)return;
+  let current=null,previousFocus=null;
+  const focusable='button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function openModal(modal){
+    if(current)closeModal(false);
+    previousFocus=document.activeElement;
+    current=modal;
+    modal.hidden=false;
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('automation-dialog-open');
+    modal.querySelector('.automation-modal-close')?.focus();
+  }
+  function closeModal(restore=true){
+    if(!current)return;
+    if(current===animation)film.dispatchEvent(new Event('aw:pause'));
+    const modal=current;
+    current=null;
+    modal.hidden=true;
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('automation-dialog-open');
+    if(restore&&previousFocus?.isConnected)previousFocus.focus();
+    previousFocus=null;
+  }
+  document.getElementById('openAnimationModal')?.addEventListener('click',()=>openModal(animation));
+  document.getElementById('openAutomationDetails')?.addEventListener('click',()=>openModal(details));
+  document.getElementById('openAutomationDetailsTitle')?.addEventListener('click',()=>openModal(details));
+  document.getElementById('detailsWatchAnimation')?.addEventListener('click',()=>openModal(animation));
+  document.querySelectorAll('[data-close-automation-modal]').forEach(b=>b.addEventListener('click',()=>closeModal()));
+  [animation,details].forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal)closeModal()}));
+  document.addEventListener('keydown',e=>{
+    if(!current)return;
+    if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeModal();return}
+    if(e.key!=='Tab')return;
+    const items=Array.from(current.querySelectorAll(focusable)).filter(el=>el.getClientRects().length>0);
+    if(!items.length){e.preventDefault();return}
+    const first=items[0],last=items[items.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  },true);
+})();
+
 </script>
 </body>
 </html>
