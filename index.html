@@ -2414,10 +2414,10 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
           <span>Original workflow screenshot</span>
         </div>
         <button type="button" class="automation-architecture-trigger" id="openWorkflowModal" aria-haspopup="dialog" aria-controls="workflowModal">
-          <img src="assets/images/ai-lead-workflow.svg" loading="lazy" width="760" height="284" alt="n8n workflow architecture overview" />
+          <img src="assets/images/ai-lead-workflow-original.png" onerror="this.onerror=null;this.src='assets/images/ai-lead-workflow.svg'" loading="lazy" width="760" height="284" alt="n8n workflow architecture overview" />
           <span class="automation-architecture-label">EXPLORE WORKFLOW ↗</span>
         </button>
-        <p class="automation-image-note">100 interconnected workflow nodes · Click to inspect the architecture.</p>
+        <p class="automation-image-note">Original n8n workflow screenshot · Click to inspect the architecture.</p>
 
         <div class="automation-flow" aria-label="Core workflow steps">
           <span>Capture</span><b>→</b><span>Qualify</span><b>→</b><span>Review</span><b>→</b><span>Follow up</span>
@@ -3121,7 +3121,7 @@ html[data-theme="light"] .automation-modal{background:rgba(22,22,22,.65)}
 <div class="automation-modal" id="workflowModal" role="dialog" aria-modal="true" aria-labelledby="workflowModalTitle" aria-hidden="true" hidden>
  <div class="automation-modal-panel automation-modal-architecture">
   <div class="automation-modal-head"><div><div class="section-label">n8n / Workflow Architecture</div><h2 id="workflowModalTitle">Behind the automation</h2></div><button type="button" class="automation-modal-close" data-close-automation-modal aria-label="Close workflow view">×</button></div>
-  <div class="automation-architecture-figure"><img src="assets/images/ai-lead-workflow.svg" alt="Full connected n8n lead generation and follow-up workflow" /><p>Lead capture → AI qualification → Human approval → Follow-up safeguards</p></div>
+  <div class="automation-architecture-figure"><img src="assets/images/ai-lead-workflow-original.png" onerror="this.onerror=null;this.src='assets/images/ai-lead-workflow.svg'" alt="Full connected n8n lead generation and follow-up workflow" /><p>Lead capture → AI qualification → Human approval → Follow-up safeguards</p></div>
  </div>
 </div>
 
